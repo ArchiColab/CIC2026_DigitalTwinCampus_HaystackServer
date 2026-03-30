@@ -1,0 +1,1556 @@
+[
+    {
+        "space_guid": "2yMDhecf15ff0Qukb9SbDN",
+        "space_number": "D1002",
+        "space_name": "Auditorio 200 paikkaa",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2yMDhecf15ff0Qukb9SbDr",
+        "space_number": "C1504",
+        "space_name": "Yleisöaula",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2yMDhecf15ff0Qukb9SbDh",
+        "space_number": "D1506",
+        "space_name": "Megora (kahvio)",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2yMDhecf15ff0Qukb9SbDY",
+        "space_number": "D1505",
+        "space_name": "Kirjasto, lehdet",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2yMDhecf15ff0Qukb9Sb8H",
+        "space_number": "C1502",
+        "space_name": "Avoin opiskelu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2yMDhecf15ff0Qukb9SbAi",
+        "space_number": "C1002",
+        "space_name": "Info",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEATK",
+        "space_number": "B1505",
+        "space_name": "Innovaatiotilat",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAHN",
+        "space_number": "C1016",
+        "space_name": "WC etutila/yl.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAHQ",
+        "space_number": "C1503",
+        "space_name": "Yleisöaula",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAHg",
+        "space_number": "C1501",
+        "space_name": "Käytävä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAHz",
+        "space_number": "B1504",
+        "space_name": "Käytävä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAET",
+        "space_number": "B1013.1",
+        "space_name": "Positian asiakastilat, terapia, 44 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAEa",
+        "space_number": "B1017",
+        "space_name": "Suun hoidon opetusklinikka, n.50 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAFn",
+        "space_number": "B1025",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEAC4",
+        "space_number": "B1011",
+        "space_name": "Positian odotus ja vastaanotto",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEADi",
+        "space_number": "B1009",
+        "space_name": "Kotikulma, K",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEADs",
+        "space_number": "B1008",
+        "space_name": "Optikkomyymälä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEA2t",
+        "space_number": "B1020",
+        "space_name": "Liikelaboratorio, 30 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEA2u",
+        "space_number": "B1016.1",
+        "space_name": "Jalkaterapian käytäntö, 12 hoitopistettä, 35 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2w2pefRQvF7h8LEseDEA3N",
+        "space_number": "B1015",
+        "space_name": "Varasto, Positia, 6op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3g0AzZ12TFUgmccIBr4Z_o",
+        "space_number": "B1019",
+        "space_name": "Opetusklinikan varasto, 3 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3VTYFK8vD6zQrOpleLa9QL",
+        "space_number": "B1003",
+        "space_name": "Kuntosali, kuntoutukseen sopivin laittein",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3VTYFK8vD6zQrOpleLa9Rz",
+        "space_number": "B1005",
+        "space_name": "Luentosali 120 paikkaa",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3VTYFK8vD6zQrOpleLa9Rd",
+        "space_number": "A1502",
+        "space_name": "Ruokailutilat",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3VTYFK8vD6zQrOpleLaAd1",
+        "space_number": "A1505",
+        "space_name": "Käytävä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3VTYFK8vD6zQrOpleLaAWt",
+        "space_number": "A1003",
+        "space_name": "Ruuanjakelu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3VTYFK8vD6zQrOpleLaAW_",
+        "space_number": "A1009",
+        "space_name": "Keittiö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "01KPyvhBT18h8nBc$$5vnu",
+        "space_number": "D1702",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1nW0Bue356JuW$pDIWYFZh",
+        "space_number": "C1601",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3za2UlH7L3pvqFQTlc43NS",
+        "space_number": "D1602",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3za2UlH7L3pvqFQTlc43NU",
+        "space_number": "D1603",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "14AanotUb56OX4oFKEkZA9",
+        "space_number": "B1604",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "14AanotUb56OX4oFKEkZAA",
+        "space_number": "B1603",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "14AanotUb56OX4oFKEkZAD",
+        "space_number": "B1605",
+        "space_name": "Kerrosjakamo",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "14AanotUb56OX4oFKEkZAF",
+        "space_number": "B1702",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1eNCkRm8LBuwIDTsBHoVkh",
+        "space_number": "B1602",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3dcapiE597iQhrYal0hvbD",
+        "space_number": "A1701",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2VEr$PzEnFaQc5Is4Xhjis",
+        "space_number": "A1602",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0qWWhE1uH4Ogsa9eKU7KXy",
+        "space_number": "B1608",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1UiNzKes1ESe6712xGkLq5",
+        "space_number": "A1702",
+        "space_name": "Kerrosjakamo",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1UiNzKes1ESe6712xGkLqo",
+        "space_number": "A1025",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1UiNzKes1ESe6712xGkLqW",
+        "space_number": "A1605",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1UiNzKes1ESe6712xGkLqi",
+        "space_number": "A1604",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1UiNzKes1ESe6712xGkLtO",
+        "space_number": "A1603",
+        "space_name": "Hissi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2VBKoKYCrFHA7YD2Yz5YHt",
+        "space_number": "A1504",
+        "space_name": "Käytävä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2c9k63Vdz5Gxe1vA9WG9f$",
+        "space_number": "C1001",
+        "space_name": "Demoluokka, 100 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3_fJ90HB5D18ez9YVqtafu",
+        "space_number": "D1605",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0u5psq1b94ZBnOoQFbHWM9",
+        "space_number": "C1505",
+        "space_name": "Avoin opiskelu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0kPdw$GZn1zPr1yNlOas8Z",
+        "space_number": "A1601",
+        "space_name": "PRSH A1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0kPdw$GZn1zPr1yNlOas88",
+        "space_number": "B1601",
+        "space_name": "PRSH B1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0kPdw$GZn1zPr1yNlOas97",
+        "space_number": "D1601",
+        "space_name": "PRSH D1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1LU31X2WrE3AGknn8paUu9",
+        "space_number": "C1602",
+        "space_name": "PRSH C1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "04TkWzwjbD_RcbBsKzMSFX",
+        "space_number": "4",
+        "space_name": "1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2VHnyIcWv56weiQEBJSqbH",
+        "space_number": "A1501",
+        "space_name": "Käytävä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "067AnjSBrFhOOMbUei6xSk",
+        "space_number": "A1607",
+        "space_name": "PRSH A2",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3PgHyWWTLAH8UmHTd2JIjJ",
+        "space_number": "C1701",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2oQX7YmXH3JgPTpFKZQse5",
+        "space_number": "B1607",
+        "space_name": "PRSH B2",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3oZ3NR9tT0cvK6l5C9N4Go",
+        "space_number": "B1002",
+        "space_name": "Siivousk.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1aoeddt6XCbRwVKzz4QV3G",
+        "space_number": "B1502",
+        "space_name": "Avoin opiskelu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "22ecKeAlv5uwKVBp0933LX",
+        "space_number": "A1022",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0bD9V8nDz1BBQRXNl$zLuT",
+        "space_number": "8",
+        "space_name": "Rakennusoikeuteen laskettava kerrosala kerroksissa",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2cVQxhOzP0aehUrvJdwHl_",
+        "space_number": "A1024",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2cVQxhOzP0aehUrvJdwHJ7",
+        "space_number": "A1023",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2f90ZgIa11LAhnjaUYWXbd",
+        "space_number": "A1020",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3ruvIcrZDDyRlv4EyjbeTP",
+        "space_number": "A1021",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2lmSsvcir5VRzoqgePhVu2",
+        "space_number": "A1032",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0n5by0o7L689RkWmjf1l$9",
+        "space_number": "A1031",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0n5by0o7L689RkWmjf1e0d",
+        "space_number": "A1033",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1WhQzpunX7cudTEHopfiRs",
+        "space_number": "A1019",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0TkaQTQKD9K98qGPiK3okb",
+        "space_number": "A1034",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1DLz7Pej9EBA1hiXfC1nVw",
+        "space_number": "B1006",
+        "space_name": "Optikkomyymälä NT",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0JhL8dtsP7CeBq$enWN9av",
+        "space_number": "B1026",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0JhL8dtsP7CeBq$enWN9ar",
+        "space_number": "B1027",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0JhL8dtsP7CeBq$enWN9aW",
+        "space_number": "B1028",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0JhL8dtsP7CeBq$enWN9aS",
+        "space_number": "B1024",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0JhL8dtsP7CeBq$enWN9a9",
+        "space_number": "B1023",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0JhL8dtsP7CeBq$enWN9a6",
+        "space_number": "B1021",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1qwf3MY7L7xeL$NLTrlCMA",
+        "space_number": "D1701",
+        "space_name": "Tekn.tila",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2h23EMBDz559HoUrgCi9vg",
+        "space_number": "D1503",
+        "space_name": "Äänisulku",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1ZghLtgbj2$RBcT74OM5yT",
+        "space_number": "B1012",
+        "space_name": "WC LE, Kotikulma",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1ZghLtgbj2$RBcT74OM5$1",
+        "space_number": "B1010",
+        "space_name": "Kotikulma, MH",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1ZghLtgbj2$RBcT74OM5uL",
+        "space_number": "B1029",
+        "space_name": "Kotikulma, OH",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0tJDAC8J94BApUpHeb5PSl",
+        "space_number": "B1014",
+        "space_name": "Positian asiakastilat, terapia, 6 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "19YX7HgwXE_xVVqCIjRHL0",
+        "space_number": "C1005",
+        "space_name": "WC etutila/yl.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "19YX7HgwXE_xVVqCIjRHKh",
+        "space_number": "C1004",
+        "space_name": "WC LE",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0PNJhgAnPDXRRgVbMVSAXE",
+        "space_number": "D1011",
+        "space_name": "Megora (kahvio)",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1R8cPDFA1Aq9YSVjsqjbBe",
+        "space_number": "A1002",
+        "space_name": "Astianpesu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "25U6hxzg999P_xLxmcPZvl",
+        "space_number": "D1009",
+        "space_name": "Ryhmätyötila 5 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3rYfHoioX5NPdKuFdczHNa",
+        "space_number": "A1007",
+        "space_name": "Keittiö, kylmiöt",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3rYfHoioX5NPdKuFdczIlP",
+        "space_number": "A1001",
+        "space_name": "Astianpalautus",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0y11tgHAX7kvAwGZCYiD4$",
+        "space_number": "D1502",
+        "space_name": "Yleisöaula",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0rQy5wolTEdg8BEyRnmckA",
+        "space_number": "A1606",
+        "space_name": "SP Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "07g7qJqKH9yPAacMHEaeWj",
+        "space_number": "D1604.2",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "15XJiSy_nAKh6FaKOHNANJ",
+        "space_number": "C1603",
+        "space_name": "SP Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0AFtVFUAT3oeY3m_jNfGNO",
+        "space_number": "B1704",
+        "space_name": "Kompressorihuone",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1_JmeBf8j44utSALc6R59p",
+        "space_number": "A1030",
+        "space_name": "WC LE",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1_JmeBf8j44utSALc6R59o",
+        "space_number": "A1026",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1_JmeBf8j44utSALc6R59n",
+        "space_number": "A1029",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1_JmeBf8j44utSALc6R59m",
+        "space_number": "A1028",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1_JmeBf8j44utSALc6R59t",
+        "space_number": "A1027",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "33MpgGYaH4UA_HT3UCnBOA",
+        "space_number": "A1006",
+        "space_name": "Keittiö, kv",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "33MpgGYaH4UA_HT3UCnBPJ",
+        "space_number": "A1008",
+        "space_name": "Keittiö, tsto",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "33MpgGYaH4UA_HT3UCnBI9",
+        "space_number": "A1004",
+        "space_name": "Keittiö, sk",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2Bht2GbyD1_gvHqLxXbIGm",
+        "space_number": "B1606",
+        "space_name": "SP Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2ojlGTzIT04gVw4BEFY8ri",
+        "space_number": "D1607",
+        "space_name": "VSS Hätäp, RI",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1eq_WFYi92sOpYQ6IPK5GT",
+        "space_number": "A1017",
+        "space_name": "Ruokailutilat 6 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0n4WXPYzTAUPHDjl_ZJcvz",
+        "space_number": "A1014",
+        "space_name": "Ruokailutilat 30 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0n4WXPYzTAUPHDjl_ZJc79",
+        "space_number": "A1016",
+        "space_name": "Ruokailutilat 6 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0n4WXPYzTAUPHDjl_ZJc4c",
+        "space_number": "A1013",
+        "space_name": "Ruokailutilat 25 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "38erGF2mb8$Omqatz6DxCs",
+        "space_number": "B1001",
+        "space_name": "WC LE",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0lhpskpSL1$etT0gzng_Zv",
+        "space_number": "D1703",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3cH1wFdyz218AFZl6GNn5J",
+        "space_number": "D1003",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3REiYV$k585PAj4vH_l$yJ",
+        "space_number": "A1018",
+        "space_name": "Ruokailutilat 6 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3REiYV$k585PAj4vH_l$xJ",
+        "space_number": "A1015",
+        "space_name": "Ruokailutilat 6 hlö",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3REiYV$k585PAj4vH_l$cd",
+        "space_number": "A1012",
+        "space_name": "Ruokailutilat",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3FfstIQyD01AnEnCWRCKFq",
+        "space_number": "B1022",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3lMli08eXC5RNkVsxiMqQ5",
+        "space_number": "A1005",
+        "space_name": "Keittiö, wc",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0qRBabUgPDeRjHCZHnEHNf",
+        "space_number": "D1004",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1jj4UJ9Z51Vf5Aif_RU6nY",
+        "space_number": "B1007",
+        "space_name": "Optikkomyymälä HIONTA",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0b7TCU0753xhUs$7Y7EImb",
+        "space_number": "C1003",
+        "space_name": "Vahtimestari",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUNq",
+        "space_number": "C1006",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUM6",
+        "space_number": "C1007",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUMg",
+        "space_number": "C1008",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUMW",
+        "space_number": "C1009",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUHE",
+        "space_number": "C1010",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUHO",
+        "space_number": "C1015",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUHk",
+        "space_number": "C1014",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUHa",
+        "space_number": "C1013",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUGF",
+        "space_number": "C1012",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUGV",
+        "space_number": "C1011",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUGX",
+        "space_number": "C1017",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUGn",
+        "space_number": "C1018",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUJ1",
+        "space_number": "C1019",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUJh",
+        "space_number": "C1020",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUJ$",
+        "space_number": "C1021",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUID",
+        "space_number": "C1022",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUIT",
+        "space_number": "C1028",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUIk",
+        "space_number": "C1027",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUIp",
+        "space_number": "C1026",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUT7",
+        "space_number": "C1025",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUTc",
+        "space_number": "C1024",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "17g1kqtab4ixcOK7FYqUTo",
+        "space_number": "C1023",
+        "space_name": "WC",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3XjUaxEwbCxAMoRsASYTtO",
+        "space_number": "A1011",
+        "space_name": "Tarkkaamo",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1BZFaUBxbCZQkZ$3PjR_Xi",
+        "space_number": "A1503",
+        "space_name": "Äänisulku",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1BZFaUBxbCZQkZ$3PjR_WL",
+        "space_number": "D1501",
+        "space_name": "Tuulikaappi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1BZFaUBxbCZQkZ$3PjR_ic",
+        "space_number": "B1018",
+        "space_name": "Suun hoidon opetusklinikka/ RTG, 3 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0py1xzOKbFLwhg6M$RGx21",
+        "space_number": "A1703/1048",
+        "space_name": "Sähköt. TKN tila",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0py1xzOKbFLwhg6M$RGxSZ",
+        "space_number": "B1703",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0tycI20NrFSg7G3KZZ_SzX",
+        "space_number": "A1704",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3QJC13_NvARuM4l_Bhfgkg",
+        "space_number": "B1503",
+        "space_name": "Avoin opiskelu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0DgIkDS1L16xn7RbMF56iu",
+        "space_number": "D1008",
+        "space_name": "Ryhmätyötilat 4 op.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0DgIkDS1L16xn7RbMF56is",
+        "space_number": "D1007",
+        "space_name": "Ryhmätyötilat 4 op.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0DgIkDS1L16xn7RbMF56iX",
+        "space_number": "D1006",
+        "space_name": "Ryhmätyötilat 4 op.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0DgIkDS1L16xn7RbMF56pT",
+        "space_number": "D1005",
+        "space_name": "Ryhmätyötilat",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2OaD2M5UXDue8BjOTL0Mc1",
+        "space_number": "D1001",
+        "space_name": "Tuolivarasto",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1VmOSJyrj72hRQjsmzOj2V",
+        "space_number": "x1701",
+        "space_name": "Aukko",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3Ll2dXYz9BNw4Wo7qZOpLE",
+        "space_number": "A1608",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2G3FQLfHv6xfpRLjIAaP55",
+        "space_number": "46",
+        "space_name": "SÄHKÖ",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2G3FQLfHv6xfpRLjIAaP6x",
+        "space_number": "47",
+        "space_name": "SÄHKÖ",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2G3FQLfHv6xfpRLjIAaP7z",
+        "space_number": "48",
+        "space_name": "SÄHKÖ",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2G3FQLfHv6xfpRLjIAaP7V",
+        "space_number": "49",
+        "space_name": "SÄHKÖ",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2G3FQLfHv6xfpRLjIAaP71",
+        "space_number": "50",
+        "space_name": "SÄHKÖ",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "35W1Fh6Nv739XpgEHsBPr0",
+        "space_number": "B1705",
+        "space_name": "Sähköt.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2K3pQRYnr1iusXwMhR6oNI",
+        "space_number": "B1506",
+        "space_name": "Käytävä",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2tSnHok6TB9A4xy9m7ZDrM",
+        "space_number": "73",
+        "space_name": "KUILU",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2tSnHok6TB9A4xy9m7ZDrm",
+        "space_number": "74",
+        "space_name": "KUILU",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2tSnHok6TB9A4xy9m7ZDqi",
+        "space_number": "75",
+        "space_name": "KUILU",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2tSnHok6TB9A4xy9m7ZDt9",
+        "space_number": "76",
+        "space_name": "KUILU",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3rvUVo_Gf6eveEIrb0A_nn",
+        "space_number": "D1012",
+        "space_name": "Tuolivar.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3DT96OWIr8EhNloaj7RM94",
+        "space_number": "C1029",
+        "space_name": "Siivousk.",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3dqv97I1b2JR60ciMz8rBL",
+        "space_number": "1",
+        "space_name": "Huoneistoala 1-kerros",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0QiU8cOrnAZ8CrW1VZg$UA",
+        "space_number": "2",
+        "space_name": "KERROSALA 1-kerros",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2m$159I0f4wgS2V9fawZJt",
+        "space_number": "D1013",
+        "space_name": "Varasto",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "02ZODw3PX4WPbIVq0FTGUh",
+        "space_number": "1",
+        "space_name": "KOKOONTUMISTILA 1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "02ZODw3PX4WPbIVq0FTGL3",
+        "space_number": "2",
+        "space_name": "KOKOONTUMISTILA 2",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "3u4ETRhFj28xWLZ2XNHMDV",
+        "space_number": "C1504a",
+        "space_name": "Tuulikaappi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2bxIv0R5XElQi$JyuX32mR",
+        "space_number": "B1609",
+        "space_name": "Kanavatila",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "21VEzGVNLChPldQbstk9d4",
+        "space_number": "1",
+        "space_name": "LIIKETILA",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "21VEzGVNLChPldQbstk8H1",
+        "space_number": "2",
+        "space_name": "MAHDOLLINEN LIIKETILA",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "21VEzGVNLChPldQbstk8LI",
+        "space_number": "3",
+        "space_name": "MAHDOLLINEN LIIKETILA",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0aCMxuq4v0UuWviG7ktEyv",
+        "space_number": "B1045",
+        "space_name": "Aistihuone",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0czrCp8Yb3MwXAw4iozvS3",
+        "space_number": "A1505a",
+        "space_name": "Tuulikaappi",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "28NuZZZcfFpRyK64UfQEiG",
+        "space_number": "D1608",
+        "space_name": "PI-putkikuilu  VSS",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0ZkKAiD3D9tw3sHt2eFxHT",
+        "space_number": "D1507",
+        "space_name": "Tekn.tila eteinen",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0ZkKAiD3D9tw3sHt2eFxJT",
+        "space_number": "A1609",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0pOcnfSJLEyAfGEqQAWHJE",
+        "space_number": "128",
+        "space_name": "1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0I09zXfwn4HP3vNed_nmFo",
+        "space_number": "132",
+        "space_name": "1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0I09zXfwn4HP3vNed_nmFz",
+        "space_number": "133",
+        "space_name": "1",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "27fqKLTvPCgvbgPSh1T1ty",
+        "space_number": "11",
+        "space_name": "KERROSALA 1-kerros",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "1JDaoLu31F8QvWnOTj_8LT",
+        "space_number": "C000x",
+        "space_name": "Ajoluiska",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqmj",
+        "space_number": "B1013.2",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqmn",
+        "space_number": "B1013.3",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqp5",
+        "space_number": "B1013.4",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqpB",
+        "space_number": "B1013.5",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqpH",
+        "space_number": "B1013.6",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqpd",
+        "space_number": "B1013.7",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqpj",
+        "space_number": "B1013.8",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqpp",
+        "space_number": "B1013.9",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqpv",
+        "space_number": "B1013.10",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqoF",
+        "space_number": "B1013.11",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqbP",
+        "space_number": "B1013.12",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqbc",
+        "space_number": "B1013.13",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqbZ",
+        "space_number": "B1013.14",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqbW",
+        "space_number": "B1013.15",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqbj",
+        "space_number": "B1013.16",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqWx",
+        "space_number": "B1013.17",
+        "space_name": "Positia, terapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqYa",
+        "space_number": "B1016.2",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqYs",
+        "space_number": "B1016.3",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqYx",
+        "space_number": "B1016.4",
+        "space_name": "Jalkaterapia, 4 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqjU",
+        "space_number": "B1016.5",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqjZ",
+        "space_number": "B1016.6",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqje",
+        "space_number": "B1016.7",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqjz",
+        "space_number": "B1016.8",
+        "space_name": "Jalkaterapia, 4 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqi2",
+        "space_number": "B1016.9",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqiN",
+        "space_number": "B1016.10",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqiS",
+        "space_number": "B1016.11",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1QrynqiX",
+        "space_number": "B1016.12",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2QBNHzWJLAYwHk1Qrynqis",
+        "space_number": "B1016.13",
+        "space_name": "Jalkaterapia, 2 op",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "0c7hap1IP8LeCcTc$TntGo",
+        "space_number": "A1615",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2eKm1MRbj9lQ$fk6CjSQZn",
+        "space_number": "A1502",
+        "space_name": "Ruokailutilat",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "27GLV1F0X8jAWU3Z5BzTKG",
+        "space_number": "A1010",
+        "space_name": "Iso auditorio, 275 paikkaa",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    },
+    {
+        "space_guid": "2t26HK3HPE$AtLDBGTtlbx",
+        "space_number": "D1604.1",
+        "space_name": "Kuilu",
+        "floor_guid": "01",
+        "floor_name": "Ground_Floor"
+    }
+]
