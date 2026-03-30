@@ -121,7 +121,7 @@ async def login(request: Request):
         key      = "session",
         value    = session_token,
         httponly = True,      # JS cannot read this cookie — XSS-safe
-        samesite = "strict",
+        samesite = "none",
         secure   = True,      # HTTPS only (Railway provides this automatically)
         max_age  = SESSION_TTL,
     )
