@@ -81,7 +81,7 @@ cp .env.example .env
 ```
 
 ### 3. Start Redis (Docker)
-Remember to install  ([Docker desktop](https://www.docker.com/products/docker-desktop/))
+Remember to install [Docker desktop](https://www.docker.com/products/docker-desktop/)
 
 ```bash
 docker run -d -p 6379:6379 --name campus-redis redis
