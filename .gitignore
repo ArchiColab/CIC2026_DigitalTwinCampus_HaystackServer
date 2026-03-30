@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Environment — NEVER commit credentials
+.env
+.env.local
+.env.*.local
+
+# Sensor data & tokens — generated at runtime, not source code
+data/token.json
+data/raw_*.json
+data/haystack_*.json
+
+# Keep space_mapping.json (generated from IFC, safe to commit)
+# data/space_mapping.json  ← do NOT ignore this one
+
+# IFC model (large binary — use Git LFS or keep out of repo)
+*.ifc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
