@@ -1305,6 +1305,7 @@ async function handleIFCFile(file) {
       controlsHint.classList.add('active');
       toolbar.classList.add('active');
       openPanel();
+      updateCoverage(); // now totalNamedSpaces is known — show correct total
     },300);
 
   } catch(err) {
@@ -1429,9 +1430,19 @@ function updateLegend(type) {
 
 function updateCoverage() {
   const sensored = Object.keys(sensorMapByGid).length;
-  const total = totalNamedSpaces || sensored;
-  const pct = total ? Math.round(sensored/total*100) : 0;
-  document.getElementById('coverage-fill').style.width = pct+'%';
+  // Only show a denominator once the IFC has been parsed and totalNamedSpaces is known.
+  // Before that, show the sensor count alone so we don't display a misleading 73/73.
+  if (!ifcModelLoaded || totalNamedSpaces === 0) {
+    document.getElementById('coverage-fill').style.width = '0%';
+    document.getElementById('coverage-text').textContent =
+      sensored > 0
+        ? `${sensored} sensors loaded — upload IFC to see coverage`
+        : 'Loading sensor data…';
+    return;
+  }
+  const total = totalNamedSpaces;
+  const pct   = Math.round(sensored / total * 100);
+  document.getElementById('coverage-fill').style.width = pct + '%';
   document.getElementById('coverage-text').textContent =
     `Coverage: ${sensored}/${total} spaces (${pct}%)`;
 }
