@@ -58,35 +58,21 @@ campus-dt/
 
 ### Prerequisites
 
-- Python 3.11+
-- Redis running locally
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
 - The `ARK_MET_F1.ifc` file
 - `data/space_mapping.json` (generate with `20260315_IfcOpenShell.ipynb`)
 
-### 1. Clone and install
+Docker Compose starts both the FastAPI app and Redis together — you don't need
+to install Python, Redis, or any dependencies on your machine directly.
+
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/your-org/campus-dt.git
 cd campus-dt
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
 ```
 
-### 2. Set up environment variables
-
-```bash
-cp .env.example .env
-# Edit .env — only REDIS_URL is needed for local dev
-```
-
-### 3. Start Redis (Docker)
-
-```bash
-docker run -d -p 6379:6379 --name campus-redis redis
-```
-
-### 4. Generate space mapping (if not already done)
+### 2. Generate space mapping (if not already done)
 
 ```bash
 # Place ARK_MET_F1.ifc in the project root, then run:
@@ -94,14 +80,40 @@ jupyter notebook 20260315_IfcOpenShell.ipynb
 # This creates data/space_mapping.json
 ```
 
-### 5. Run the server
+### 3. Start everything with Docker Compose
 
 ```bash
-uvicorn main:app --reload --port 8000
+docker compose up --build
 ```
+
+This starts two containers on a shared network:
+
+| Container | Role | Internal address |
+|-----------|------|-----------------|
+| `app` | FastAPI server | http://localhost:8000 |
+| `redis` | Session & cache store | `redis:6379` (internal only) |
+
+`REDIS_URL=redis://redis:6379` is set automatically in `docker-compose.yml` —
+no `.env` file needed for local development.
 
 Open [http://localhost:8000](http://localhost:8000) — you'll see the login screen.  
 Sign in with your Empathic Building credentials, then upload your IFC file.
+
+### Stopping
+
+```bash
+docker compose down
+```
+
+### Rebuilding after code changes
+
+The `app` container mounts your source code as a volume, so most changes
+are reflected immediately without a rebuild. If you change `requirements.txt`
+or the `Dockerfile`, rebuild with:
+
+```bash
+docker compose up --build
+```
 
 ---
 
@@ -127,7 +139,6 @@ In your Railway service → **Variables** tab, add:
 |----------|-------|
 | `REDIS_URL` | *(auto-filled by Redis plugin — do not change)* |
 
-Check the `REDIS_URL` in the VARIABLES of the FAST API to have the same `REDIS_URL` with the Redis database in Railway. 
 That's it. No EB credentials go in Railway — each user provides their own at login.
 
 ### Step 4 — Deploy
