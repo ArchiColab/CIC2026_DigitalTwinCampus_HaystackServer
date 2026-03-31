@@ -81,7 +81,6 @@ cp .env.example .env
 ```
 
 ### 3. Start Redis (Docker)
-Remember to install [Docker desktop](https://www.docker.com/products/docker-desktop/)
 
 ```bash
 docker run -d -p 6379:6379 --name campus-redis redis
@@ -128,6 +127,7 @@ In your Railway service → **Variables** tab, add:
 |----------|-------|
 | `REDIS_URL` | *(auto-filled by Redis plugin — do not change)* |
 
+Check the `REDIS_URL` in the VARIABLES of the FAST API to have the same `REDIS_URL` with the Redis database in Railway. 
 That's it. No EB credentials go in Railway — each user provides their own at login.
 
 ### Step 4 — Deploy
