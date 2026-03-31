@@ -68,15 +68,15 @@ to install Python, Redis, or any dependencies on your machine directly.
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-org/campus-dt.git
-cd campus-dt
+git clone https://github.com/ArchiColab/CIC2026_DigitalTwinCampus_HaystackServer.git
+cd CIC2026_DigitalTwinCampus_HaystackServer
 ```
-
+Copy the file docker-compose.yml and Dockerfile from /LocalDeployment to the root folder.
 ### 2. Generate space mapping (if not already done)
 
 ```bash
 # Place ARK_MET_F1.ifc in the project root, then run:
-jupyter notebook 20260315_IfcOpenShell.ipynb
+jupyter notebook 20260318_IfcOpenShell.ipynb
 # This creates data/space_mapping.json
 ```
 
@@ -139,6 +139,7 @@ In your Railway service → **Variables** tab, add:
 |----------|-------|
 | `REDIS_URL` | *(auto-filled by Redis plugin — do not change)* |
 
+Check the `REDIS_URL` in the FastAPI should be the same with Redis database with this format redis://default:password@redis.railway.internal:6379
 That's it. No EB credentials go in Railway — each user provides their own at login.
 
 ### Step 4 — Deploy
@@ -149,7 +150,6 @@ To trigger a manual deploy: **Railway dashboard → Deploy → Deploy Now**
 ### Step 5 — Check the deployment
 
 Once deployed, Railway gives you a URL like `https://campus-dt.up.railway.app`.
-
 Visit `/api/status` after logging in to confirm Redis and the EB API are connected:
 
 ```json
