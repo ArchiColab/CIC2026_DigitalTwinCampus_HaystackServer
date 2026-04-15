@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Digital Twin — IFC Viewer</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:#0f1117; color:#e0e0e0;
+  overflow:hidden; height:100vh; width:100vw;
+}
+
+/* ── Login screen ────────────────────────────────── */
+#login-screen {
+  position:fixed; inset:0; background:#0f1117;
+  display:flex; align-items:center; justify-content:center; z-index:999;
+}
+#login-screen.hidden { display:none; }
+#login-box {
+  background:#1a1d25; border:1px solid #2a2d35;
+  border-radius:14px; padding:40px; width:360px; max-width:92vw;
+}
+#login-box h2 { font-size:17px; font-weight:700; color:#fff; margin-bottom:4px; }
+#login-box p  { font-size:12px; color:#6b7280; margin-bottom:28px; }
+.login-label  { font-size:11px; font-weight:600; letter-spacing:.06em;
+                text-transform:uppercase; color:#4b5563; display:block; margin-bottom:5px; }
+.login-input  {
+  width:100%; padding:10px 12px; background:#0f1117;
+  border:1px solid #2a2d35; border-radius:7px;
+  color:#e0e0e0; font-size:13px; margin-bottom:14px;
+  transition:border-color .15s;
+}
+.login-input:focus { outline:none; border-color:#3b82f6; }
+#login-error  { color:#e34d4a; font-size:12px; min-height:18px; margin-bottom:12px; }
+#login-btn {
+  width:100%; padding:11px; background:#3b82f6; color:#fff;
+  border:none; border-radius:7px; font-size:13px; font-weight:600;
+  cursor:pointer; transition:background .15s;
+}
+#login-btn:hover:not(:disabled) { background:#2563eb; }
+#login-btn:disabled { opacity:.6; cursor:not-allowed; }
+#login-footer { margin-top:18px; text-align:center; font-size:11px; color:#4b5563; }
+
+/* ── Header ──────────────────────────────────────── */
+#header {
+  position:fixed; top:0; left:0; right:0; height:52px;
+  background:#1a1d25; border-bottom:1px solid #2a2d35;
+  display:flex; align-items:center; padding:0 16px;
+  z-index:100; gap:10px;
+}
+#header h1 { font-size:15px; font-weight:600; color:#fff; white-space:nowrap; }
+.sep { width:1px; height:24px; background:#3a3d45; flex-shrink:0; }
+
+/* ── Cache status badge ──────────────────────────── */
+#cache-status {
+  font-size:11px; color:#6b7280; background:#1e2028;
+  padding:3px 8px; border-radius:4px; border:1px solid #2a2d35;
+  white-space:nowrap;
+}
+#cache-status.live   { color:#34d399; border-color:#064e3b; }
+#cache-status.stale  { color:#f59e0b; border-color:#451a03; }
+#cache-status.error  { color:#f87171; border-color:#450a0a; }
+
+/* ── User badge + logout ─────────────────────────── */
+#user-badge {
+  margin-left:auto; display:flex; align-items:center; gap:8px;
+  font-size:12px; color:#6b7280; flex-shrink:0;
+}
+#user-email { color:#9ca3af; max-width:180px; overflow:hidden; text-overflow:ellipsis; }
+#logout-btn {
+  padding:4px 10px; background:#22252e; border:1px solid #2a2d35;
+  border-radius:5px; color:#9ca3af; font-size:11px; cursor:pointer;
+  transition:all .15s;
+}
+#logout-btn:hover { background:#2a2d38; color:#e0e0e0; border-color:#3a3d45; }
+
+/* ── Toolbar buttons ─────────────────────────────── */
+#toolbar { display:none; align-items:center; gap:5px; flex-wrap:wrap; }
+#toolbar.active { display:flex; }
+.tool-btn {
+  padding:5px 12px; background:#22252e; border:1px solid #2a2d35;
+  border-radius:5px; color:#9ca3af; font-size:12px; cursor:pointer;
+  transition:all .15s; white-space:nowrap;
+}
+.tool-btn:hover { background:#2a2d38; color:#e0e0e0; border-color:#3a3d45; }
+.tool-btn.active-btn { background:#3b82f6; color:#fff; border-color:#3b82f6; }
+
+/* ── Mode toggle pills ───────────────────────────────── */
+.mode-btn {
+  padding:4px 13px; background:transparent; border:none;
+  border-radius:5px; color:#6b7280; font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .18s; white-space:nowrap;
+}
+.mode-btn:hover { color:#c0c4cc; }
+.mode-btn.active-mode { background:#1e3a5f; color:#93c5fd; }
+
+/* ── Upload zone ─────────────────────────────────── */
+#upload-zone {
+  position:fixed; top:52px; left:0; right:0; bottom:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:50; background:#0f1117;
+}
+#upload-zone.hidden { display:none; }
+#drop-area {
+  width:520px; max-width:90vw; padding:50px 40px;
+  border:2px dashed #3a3d55; border-radius:16px;
+  text-align:center; cursor:pointer; transition:all .2s; background:#14161e;
+}
+#drop-area:hover, #drop-area.dragover {
+  border-color:#4a8cff; background:#181c28;
+  box-shadow:0 0 40px rgba(74,140,255,.08);
+}
+#drop-area svg { width:56px; height:56px; margin-bottom:16px; fill:#4a5568; }
+#drop-area h2 { font-size:18px; font-weight:600; color:#c0c4cc; margin-bottom:6px; }
+#drop-area p  { font-size:13px; color:#6b7280; margin-bottom:18px; }
+#drop-area .browse-btn {
+  display:inline-block; padding:9px 26px; background:#3b82f6; color:#fff;
+  border:none; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer;
+}
+#drop-area .browse-btn:hover { background:#2563eb; }
+#file-input { display:none; }
+
+/* ── 3D Viewer ───────────────────────────────────── */
+#viewer-container { position:fixed; top:52px; left:0; right:0; bottom:0; display:none; }
+#viewer-container.active { display:block; }
+#three-canvas { width:100%; height:100%; display:block; }
+
+/* ── Loading ─────────────────────────────────────── */
+#loading-overlay {
+  position:fixed; top:52px; left:0; right:0; bottom:0;
+  background:rgba(15,17,23,.93); display:none;
+  flex-direction:column; align-items:center; justify-content:center; z-index:90;
+}
+#loading-overlay.active { display:flex; }
+.spinner {
+  width:44px; height:44px; border:4px solid #2a2d35;
+  border-top:4px solid #3b82f6; border-radius:50%;
+  animation:spin .8s linear infinite; margin-bottom:18px;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+#loading-text { font-size:14px; color:#9ca3af; }
+#loading-progress {
+  width:280px; max-width:80vw; height:4px; background:#2a2d35;
+  border-radius:2px; margin-top:14px; overflow:hidden;
+}
+#loading-bar { height:100%; background:#3b82f6; border-radius:2px; width:0%; transition:width .3s; }
+
+/* ── Info panel ──────────────────────────────────── */
+#info-panel {
+  position:fixed; bottom:16px; left:16px;
+  background:rgba(26,29,37,.92); border:1px solid #2a2d35;
+  border-radius:10px; padding:14px 18px; font-size:12px;
+  line-height:1.7; z-index:80; display:none; backdrop-filter:blur(12px);
+  min-width:220px;
+}
+#info-panel.active { display:block; }
+#info-panel .title { font-weight:600; font-size:13px; color:#fff; margin-bottom:6px; }
+#info-panel .row { display:flex; justify-content:space-between; gap:16px; }
+#info-panel .label { color:#6b7280; }
+#info-panel .value { color:#d1d5db; font-weight:500; }
+
+/* ── Controls hint ───────────────────────────────── */
+#controls-hint {
+  position:fixed; bottom:16px; right:16px;
+  background:rgba(26,29,37,.85); border:1px solid #2a2d35;
+  border-radius:10px; padding:10px 14px; font-size:11px;
+  color:#6b7280; z-index:80; display:none;
+  backdrop-filter:blur(12px); line-height:1.9;
+}
+#controls-hint.active { display:block; }
+#controls-hint kbd {
+  background:#2a2d35; padding:1px 5px; border-radius:3px;
+  font-size:10px; color:#9ca3af;
+}
+
+/* ── Right side panel ────────────────────────────── */
+#side-panel {
+  position:fixed; top:52px; right:0; bottom:0; width:300px;
+  background:rgba(20,22,30,.96); border-left:1px solid #2a2d35;
+  overflow-y:auto; z-index:80; display:none;
+  backdrop-filter:blur(12px);
+  transition:transform .25s;
+}
+#side-panel.active { display:block; }
+
+.panel-section {
+  padding:14px 16px; border-bottom:1px solid #1e2028;
+}
+.panel-section-title {
+  font-size:10px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:#4a8cff; margin-bottom:10px;
+}
+
+/* Sensor type tabs */
+#sensor-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:2px; }
+.sensor-tab {
+  flex:1; min-width:60px; padding:6px 4px; text-align:center;
+  background:#1a1d25; border:1px solid #2a2d35; border-radius:5px;
+  color:#6b7280; font-size:11px; font-weight:500; cursor:pointer; transition:all .15s;
+}
+.sensor-tab:hover { background:#22252e; color:#e0e0e0; }
+.sensor-tab.active { background:#3b82f6; color:#fff; border-color:#3b82f6; }
+.sensor-tab.disabled { opacity:.35; cursor:not-allowed; pointer-events:none; }
+
+/* Legend */
+#legend-container { margin-top:10px; }
+.legend-row {
+  display:flex; align-items:center; gap:10px;
+  padding:4px 0;
+}
+.legend-swatch {
+  width:18px; height:18px; border-radius:3px; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.12);
+}
+.legend-label { font-size:11px; color:#9ca3af; }
+
+/* Coverage bar */
+#coverage-section { margin-top:2px; }
+.coverage-bar-bg {
+  height:6px; background:#1e2028; border-radius:3px; overflow:hidden; margin-top:6px;
+}
+.coverage-bar-fill {
+  height:100%; background:linear-gradient(90deg,#3b82f6,#22d3ee);
+  border-radius:3px; transition:width .5s;
+}
+.coverage-text { font-size:11px; color:#6b7280; margin-top:4px; }
+
+/* Wing summary */
+#wing-table {
+  width:100%; border-collapse:collapse; font-size:11px; margin-top:6px;
+}
+#wing-table th {
+  color:#4b5563; font-weight:600; font-size:10px;
+  text-transform:uppercase; letter-spacing:.06em;
+  padding:4px 6px; text-align:center; border-bottom:1px solid #1e2028;
+}
+#wing-table td {
+  padding:5px 6px; text-align:center; border-bottom:1px solid #1a1d25;
+  font-weight:500;
+}
+#wing-table td.row-label { text-align:left; color:#4b5563; font-size:10px; text-transform:uppercase; }
+
+/* Anomaly list */
+#anomaly-list { margin-top:4px; }
+.anomaly-item {
+  background:#2a1515; border:1px solid #4a2020; border-radius:5px;
+  padding:6px 10px; margin-bottom:5px; font-size:11px;
+}
+.anomaly-room { font-weight:600; color:#fca5a5; font-size:12px; }
+.anomaly-detail { color:#9ca3af; margin-top:2px; }
+
+/* Click inspect tooltip */
+#inspect-tooltip {
+  position:fixed; background:rgba(20,22,30,.97);
+  border:1px solid #3b82f6; border-radius:8px;
+  padding:12px 14px; font-size:12px; color:#e0e0e0;
+  z-index:200; pointer-events:none; display:none;
+  backdrop-filter:blur(8px); line-height:1.8; max-width:260px;
+  box-shadow:0 4px 24px rgba(0,0,0,.4);
+}
+#inspect-tooltip .tt-room { font-weight:700; color:#fff; font-size:13px; margin-bottom:4px; }
+#inspect-tooltip .tt-row { display:flex; justify-content:space-between; gap:12px; }
+#inspect-tooltip .tt-key { color:#6b7280; }
+#inspect-tooltip .tt-val { font-weight:600; }
+#inspect-tooltip .tt-anomaly {
+  margin-top:6px; padding:5px 8px; background:#2a1515;
+  border-radius:4px; border-left:3px solid #ef4444;
+  font-size:11px; color:#fca5a5;
+}
+
+/* Heatmap toggle */
+#heatmap-toggle-btn {
+  display:block; width:100%; padding:8px; background:#3b82f6;
+  border:none; border-radius:6px; color:#fff; font-size:12px;
+  font-weight:600; cursor:pointer; margin-top:8px; transition:background .15s;
+}
+#heatmap-toggle-btn:hover { background:#2563eb; }
+#heatmap-toggle-btn.off { background:#374151; }
+#heatmap-toggle-btn.off:hover { background:#4b5563; }
+
+/* Sensor data section */
+#sensor-status-info { font-size:11px; color:#6b7280; line-height:1.8; }
+#sensor-status-info strong { color:#9ca3af; }
+#refresh-btn {
+  display:block; width:100%; margin-top:8px; padding:7px;
+  background:#22252e; border:1px solid #2a2d35; border-radius:6px;
+  color:#9ca3af; font-size:12px; cursor:pointer; transition:all .15s;
+}
+#refresh-btn:hover { background:#2a2d38; color:#e0e0e0; }
+#refresh-btn:disabled { opacity:.5; cursor:not-allowed; }
+
+/* Hover tooltip */
+#hover-tooltip {
+  position:fixed; background:rgba(26,29,37,.95); border:1px solid #3b82f6;
+  border-radius:6px; padding:7px 12px; font-size:11px; color:#e0e0e0;
+  z-index:200; pointer-events:none; display:none; backdrop-filter:blur(8px); line-height:1.6;
+}
+#hover-tooltip .tt-room { font-weight:600; color:#fff; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     LOGIN SCREEN
+     Shown on first load. Hidden after successful /api/login call.
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div id="login-box">
+    <h2>🏢 Campus Digital Twin</h2>
+    <p>Sign in with your Empathic Building account</p>
+
+    <label class="login-label" for="login-email">Email</label>
+    <input id="login-email" class="login-input" type="email"
+           placeholder="you@metropolia.fi" autocomplete="email">
+
+    <label class="login-label" for="login-password">Password</label>
+    <input id="login-password" class="login-input" type="password"
+           placeholder="••••••••" autocomplete="current-password">
+
+    <div id="login-error"></div>
+
+    <button id="login-btn">Sign in</button>
+
+    <div id="login-footer">
+      Metropolia University of Applied Sciences · CiC 2026
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MAIN APP (shown after login)
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<!-- Header -->
+<div id="header">
+  <h1>🏢 Campus Digital Twin</h1>
+  <div id="mode-toggle" style="display:flex;gap:3px;background:#0f1117;border:1px solid #2a2d35;border-radius:7px;padding:3px;">
+    <button id="btn-mode-spaces"   class="mode-btn active-mode">🏠 Spaces</button>
+    <button id="btn-mode-elements" class="mode-btn">🧱 Elements</button>
+  </div>
+  <div class="sep"></div>
+  <div id="toolbar">
+    <button class="tool-btn" id="btn-wireframe">Wireframe</button>
+    <button class="tool-btn" id="btn-edges">Edges</button>
+    <button class="tool-btn" id="btn-transparent">X-Ray</button>
+    <button class="tool-btn" id="btn-fit">Fit View</button>
+    <div class="sep"></div>
+    <button class="tool-btn" id="btn-new-file">New IFC</button>
+    <button class="tool-btn" id="btn-toggle-panel">◀ Sensor Panel</button>
+  </div>
+  <!-- Cache freshness badge -->
+  <span id="cache-status">—</span>
+  <!-- Logged-in user + logout -->
+  <div id="user-badge">
+    <span id="user-email"></span>
+    <button id="logout-btn">Sign out</button>
+  </div>
+</div>
+
+<!-- Upload zone -->
+<div id="upload-zone">
+  <div id="drop-area">
+    <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+    <h2>Upload IFC Model</h2>
+    <p>Drag & drop your .ifc file here, or click to browse</p>
+    <button class="browse-btn" id="btn-browse">Choose IFC File</button>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept=".ifc">
+
+<!-- 3D Viewer -->
+<div id="viewer-container">
+  <canvas id="three-canvas"></canvas>
+</div>
+
+<!-- Loading -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div id="loading-text">Loading...</div>
+  <div id="loading-progress"><div id="loading-bar"></div></div>
+</div>
+
+<!-- Info panel (bottom-left) -->
+<div id="info-panel">
+  <div class="title" id="info-title">📐 Model Info</div>
+  <div class="row"><span class="label">File</span><span class="value" id="info-filename">—</span></div>
+  <div class="row"><span class="label">Size</span><span class="value" id="info-filesize">—</span></div>
+  <div class="row"><span class="label">Meshes</span><span class="value" id="info-meshes">—</span></div>
+  <div class="row"><span class="label">Triangles</span><span class="value" id="info-triangles">—</span></div>
+  <div class="row"><span class="label">Load time</span><span class="value" id="info-time">—</span></div>
+</div>
+
+<!-- Controls hint (bottom-right) -->
+<div id="controls-hint">
+  <kbd>Left drag</kbd> Rotate &nbsp;
+  <kbd>Right drag</kbd> Pan<br>
+  <kbd>Scroll</kbd> Zoom &nbsp;
+  <kbd>F</kbd> Fit view<br>
+  <kbd>W</kbd> Wireframe &nbsp;
+  <kbd>E</kbd> Edges &nbsp;
+  <kbd>X</kbd> X-Ray<br>
+  <kbd>S</kbd> Toggle sensor panel
+</div>
+
+<!-- Right sensor panel -->
+<div id="side-panel">
+
+  <!-- Sensor type selector -->
+  <div class="panel-section">
+    <div class="panel-section-title">Sensor Layer</div>
+    <div id="sensor-tabs">
+      <div class="sensor-tab" data-type="temperature">🌡 Temp</div>
+      <div class="sensor-tab" data-type="co2">💨 CO₂</div>
+      <div class="sensor-tab" data-type="humidity">💧 Humid</div>
+      <div class="sensor-tab" data-type="occupancy">🚶 Occ</div>
+      <div class="sensor-tab" data-type="comfort">😊 Comfort</div>
+      <div class="sensor-tab" data-type="iaq_alert">⚠ IAQ</div>
+    </div>
+    <button id="heatmap-toggle-btn" class="off">Heatmap OFF</button>
+  </div>
+
+  <!-- Legend -->
+  <div class="panel-section">
+    <div class="panel-section-title">Legend</div>
+    <div id="legend-container"></div>
+  </div>
+
+  <!-- Coverage -->
+  <div class="panel-section" id="coverage-section">
+    <div class="panel-section-title">Sensor Coverage</div>
+    <div class="coverage-bar-bg"><div class="coverage-bar-fill" id="coverage-fill" style="width:0%"></div></div>
+    <div class="coverage-text" id="coverage-text">Loading sensor data…</div>
+  </div>
+
+  <!-- Wing summary -->
+  <div class="panel-section">
+    <div class="panel-section-title">Wing Summary</div>
+    <table id="wing-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th id="wh-A">A</th><th id="wh-B">B</th>
+          <th id="wh-C">C</th><th id="wh-D">D</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Temp °C</td>
+          <td id="wt-A">—</td><td id="wt-B">—</td>
+          <td id="wt-C">—</td><td id="wt-D">—</td>
+        </tr>
+        <tr>
+          <td class="row-label">CO₂ ppm</td>
+          <td id="wc-A">—</td><td id="wc-B">—</td>
+          <td id="wc-C">—</td><td id="wc-D">—</td>
+        </tr>
+        <tr>
+          <td class="row-label">Occ %</td>
+          <td id="wo-A">—</td><td id="wo-B">—</td>
+          <td id="wo-C">—</td><td id="wo-D">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Anomalies -->
+  <div class="panel-section">
+    <div class="panel-section-title">⚠ Anomalies <span id="anomaly-count" style="color:#6b7280;font-weight:400"></span></div>
+    <div id="anomaly-list"><div style="color:#4b5563;font-size:11px">Loading…</div></div>
+  </div>
+
+  <!-- Data source / refresh -->
+  <div class="panel-section">
+    <div class="panel-section-title">Data Source</div>
+    <div id="sensor-status-info">
+      <div>Source: <strong>Empathic Building API</strong></div>
+      <div>Refresh: <strong>every 3 minutes</strong></div>
+      <div id="sensor-stats" style="margin-top:4px;line-height:1.8"></div>
+    </div>
+    <button id="refresh-btn">🔄 Refresh now</button>
+  </div>
+
+</div>
+
+<!-- Hover tooltip -->
+<div id="hover-tooltip"></div>
+
+<!-- Click inspect tooltip -->
+<div id="inspect-tooltip"></div>
+
+<!-- Three.js importmap -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.175.0/examples/jsm/"
+  }
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     AUTH — runs immediately (before the module script)
+     Checks if the user is already logged in, shows login screen if not.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+(async function initAuth() {
+  // Check for an existing valid session
+  try {
+    const res = await fetch('/api/me');
+    if (res.ok) {
+      const { email } = await res.json();
+      showApp(email);
+      return;
+    }
+  } catch (_) {}
+  // No valid session — show login
+  document.getElementById('login-screen').classList.remove('hidden');
+})();
+
+async function doLogin() {
+  const btn      = document.getElementById('login-btn');
+  const errorDiv = document.getElementById('login-error');
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  errorDiv.textContent = '';
+  if (!email || !password) {
+    errorDiv.textContent = 'Please enter your email and password.';
+    return;
+  }
+
+  btn.textContent = 'Signing in…';
+  btn.disabled    = true;
+
+  try {
+    const res = await fetch('/api/login', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email, password }),
+    });
+    if (res.ok) {
+      const { email: confirmedEmail } = await res.json();
+      showApp(confirmedEmail);
+    } else {
+      const err = await res.json().catch(() => ({}));
+      errorDiv.textContent = err.detail || 'Login failed. Check your credentials.';
+    }
+  } catch {
+    errorDiv.textContent = 'Network error — is the server running?';
+  } finally {
+    btn.textContent = 'Sign in';
+    btn.disabled    = false;
+  }
+}
+
+function showApp(email) {
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('user-email').textContent = email;
+  // Trigger sensor data load once the module script's loadSensorDataFromServer is ready
+  window._userEmail = email;
+  window._appReady  = true;
+  if (typeof window._onAppReady === 'function') window._onAppReady();
+}
+
+async function doLogout() {
+  await fetch('/api/logout', { method: 'POST' });
+  location.reload();
+}
+
+// Event listeners for login form
+document.getElementById('login-btn').addEventListener('click', doLogin);
+document.getElementById('login-password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('logout-btn').addEventListener('click', doLogout);
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MAIN APP MODULE — unchanged sensor/IFC logic from original file,
+     with sensor data now fetched from /api/points instead of file upload
+     ═══════════════════════════════════════════════════════════════════ -->
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ═══════════════════════════════════════════════════════════════════
+// SENSOR CONFIGURATION (mirrors campus_dt_visualizer.py exactly)
+// ═══════════════════════════════════════════════════════════════════
+
+const ANOMALY_THRESHOLD = 1.5;
+
+const LEGEND_ENTRIES = {
+  temperature: [
+    { color:'#3889d4', label:'< 19°C  too cold' },
+    { color:'#1c9e75', label:'19–21°C  cool' },
+    { color:'#40a62e', label:'21–23°C  comfortable ✓' },
+    { color:'#f09e26', label:'23–26°C  warm' },
+    { color:'#e34d4a', label:'> 26°C  too hot' },
+    { color:'#808080', label:'no data', dim:true },
+  ],
+  co2: [
+    { color:'#40a62e', label:'< 600 ppm  excellent' },
+    { color:'#a7d434', label:'600–800 ppm  good' },
+    { color:'#f09e26', label:'800–1000 ppm  moderate' },
+    { color:'#e37f1a', label:'1000–1200 ppm  poor' },
+    { color:'#e34d4a', label:'> 1200 ppm  unhealthy' },
+    { color:'#808080', label:'no data', dim:true },
+  ],
+  humidity: [
+    { color:'#e34d4a', label:'< 30 %RH  very dry' },
+    { color:'#f09e26', label:'30–40 %RH  dry' },
+    { color:'#40a62e', label:'40–60 %RH  comfortable ✓' },
+    { color:'#1c9e75', label:'60–70 %RH  humid' },
+    { color:'#3889d4', label:'> 70 %RH  very humid' },
+    { color:'#808080', label:'no data', dim:true },
+  ],
+  occupancy: [
+    { color:'#33c85a', label:'occupied' },
+    { color:'#3889d4', label:'vacant' },
+    { color:'#808080', label:'no data', dim:true },
+  ],
+  comfort: [
+    { color:'#1c9e75', label:'81–100  great' },
+    { color:'#40a62e', label:'61–80   good' },
+    { color:'#f09e26', label:'41–60   moderate' },
+    { color:'#e37f1a', label:'21–40   poor' },
+    { color:'#e34d4a', label:'0–20    very poor' },
+    { color:'#808080', label:'no data (needs temp+CO₂)', dim:true },
+  ],
+  iaq_alert: [
+    { color:'#33c85a', label:'vacant (any CO₂)' },
+    { color:'#40a62e', label:'occupied, CO₂ < 800 ppm' },
+    { color:'#f09e26', label:'occupied, CO₂ 800–1200' },
+    { color:'#e34d4a', label:'occupied, CO₂ > 1200 ppm' },
+    { color:'#998c33', label:'CO₂ only, no occ. sensor' },
+    { color:'#808080', label:'no data', dim:true },
+  ],
+};
+
+// ── Color calculation functions ────────────────────────────────────
+
+function tempColor(val) {
+  if (val === null) return null;
+  const stops = [
+    [19,[0.22,0.54,0.83]],[21,[0.11,0.62,0.46]],
+    [23,[0.25,0.65,0.18]],[26,[0.94,0.62,0.15]],[99,[0.89,0.30,0.29]]
+  ];
+  for (let i=0;i<stops.length;i++) if (val<=stops[i][0]) return new THREE.Color(...stops[i][1]);
+  return new THREE.Color(...stops[stops.length-1][1]);
+}
+
+function co2Color(val) {
+  if (val === null) return null;
+  const stops = [
+    [600,[0.25,0.65,0.18]],[800,[0.65,0.83,0.20]],
+    [1000,[0.94,0.62,0.15]],[1200,[0.89,0.50,0.10]],[9999,[0.89,0.30,0.29]]
+  ];
+  for (let i=0;i<stops.length;i++) if (val<=stops[i][0]) return new THREE.Color(...stops[i][1]);
+  return new THREE.Color(...stops[stops.length-1][1]);
+}
+
+function humidColor(val) {
+  if (val === null) return null;
+  const stops = [
+    [30,[0.22,0.54,0.83]],[40,[0.11,0.62,0.46]],
+    [60,[0.25,0.65,0.18]],[70,[0.94,0.62,0.15]],[100,[0.89,0.30,0.29]]
+  ];
+  for (let i=0;i<stops.length;i++) if (val<=stops[i][0]) return new THREE.Color(...stops[i][1]);
+  return new THREE.Color(...stops[stops.length-1][1]);
+}
+
+function occColor(val) {
+  if (val === null) return null;
+  return val ? new THREE.Color(0.20,0.78,0.35) : new THREE.Color(0.22,0.54,0.83);
+}
+
+function comfortScore(temp, co2) {
+  if (temp===null || co2===null) return null;
+  let t;
+  if      (temp < 18)  t = 0;
+  else if (temp < 21)  t = (temp-18)/3;
+  else if (temp <= 23) t = 1;
+  else if (temp <= 27) t = (27-temp)/4;
+  else                 t = 0;
+  const c = co2 <= 600 ? 1 : Math.max(0, Math.min(1, (1400-co2)/800));
+  return Math.round((t*0.5 + c*0.5)*100);
+}
+
+function comfortColor(score) {
+  if (score === null) return null;
+  if (score > 80) return new THREE.Color(0.11,0.62,0.46);
+  if (score > 60) return new THREE.Color(0.25,0.65,0.18);
+  if (score > 40) return new THREE.Color(0.94,0.62,0.15);
+  if (score > 20) return new THREE.Color(0.89,0.50,0.10);
+  return new THREE.Color(0.89,0.30,0.29);
+}
+
+function iaqKey(occ, co2) {
+  if (occ===null && co2===null) return null;
+  if (occ===null)         return 'no_occ_data';
+  if (!occ)               return 'vacant_ok';
+  if (co2===null||co2<800) return 'occupied_ok';
+  if (co2<1200)           return 'occupied_watch';
+  return 'occupied_alert';
+}
+
+function iaqColor(key) {
+  const map = {
+    'vacant_ok':      [0.20,0.78,0.35],
+    'occupied_ok':    [0.25,0.65,0.18],
+    'occupied_watch': [0.94,0.62,0.15],
+    'occupied_alert': [0.89,0.30,0.29],
+    'no_occ_data':    [0.60,0.55,0.20],
+  };
+  return key && map[key] ? new THREE.Color(...map[key]) : null;
+}
+
+function getColorForType(type, roomData) {
+  if (!roomData) return null;
+  const { temp, co2, hum, occ } = roomData;
+  switch (type) {
+    case 'temperature': return tempColor(temp);
+    case 'co2':         return co2Color(co2);
+    case 'humidity':    return humidColor(hum);
+    case 'occupancy':   return occColor(occ);
+    case 'comfort':     return comfortColor(comfortScore(temp, co2));
+    case 'iaq_alert':   return iaqColor(iaqKey(occ, co2));
+  }
+  return null;
+}
+
+function detectAnomalies(sensorMapByRoom) {
+  const rooms = Object.keys(sensorMapByRoom);
+  const temps = rooms.map(r => sensorMapByRoom[r].temp).filter(v=>v!==null);
+  const co2s  = rooms.map(r => sensorMapByRoom[r].co2 ).filter(v=>v!==null);
+  const anomalies = {};
+
+  function zscore(arr, val) {
+    if (arr.length < 3) return 0;
+    const mean = arr.reduce((a,b)=>a+b,0)/arr.length;
+    const std  = Math.sqrt(arr.reduce((s,v)=>s+(v-mean)**2,0)/arr.length);
+    return std === 0 ? 0 : (val-mean)/std;
+  }
+
+  for (const d of Object.values(sensorMapByRoom)) {
+    const room = d.roomId || '';
+    const reasons = [];
+    if (d.temp !== null) {
+      const z = zscore(temps, d.temp);
+      if (Math.abs(z) > ANOMALY_THRESHOLD)
+        reasons.push(`temp=${d.temp.toFixed(1)}°C (z=${z>0?'+':''}${z.toFixed(1)})`);
+    }
+    if (d.co2 !== null) {
+      const z = zscore(co2s, d.co2);
+      if (Math.abs(z) > ANOMALY_THRESHOLD)
+        reasons.push(`CO₂=${Math.round(d.co2)}ppm (z=${z>0?'+':''}${z.toFixed(1)})`);
+    }
+    if (reasons.length && room) anomalies[room] = reasons;
+  }
+  return anomalies;
+}
+
+function computeWingStats(sensorMapByRoom) {
+  const wings = {};
+  for (const [_gid, d] of Object.entries(sensorMapByRoom)) {
+    const room = d.roomId || '';
+    if (!room || !room[0].match(/[A-Za-z]/)) continue;
+    const w = room[0].toUpperCase();
+    if (!wings[w]) wings[w] = { temps:[], co2s:[], occs:[] };
+    if (d.temp !== null) wings[w].temps.push(d.temp);
+    if (d.co2  !== null) wings[w].co2s.push(d.co2);
+    if (d.occ  !== null) wings[w].occs.push(d.occ ? 1 : 0);
+  }
+  const result = {};
+  for (const [w, v] of Object.entries(wings)) {
+    const avg = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
+    result[w] = {
+      temp: v.temps.length ? +(avg(v.temps).toFixed(1)) : null,
+      co2:  v.co2s.length  ? Math.round(avg(v.co2s))   : null,
+      occ:  v.occs.length  ? Math.round(avg(v.occs)*100): null,
+    };
+  }
+  return result;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// THREE.JS SCENE SETUP
+// ═══════════════════════════════════════════════════════════════════
+
+const canvas          = document.getElementById('three-canvas');
+const viewerContainer = document.getElementById('viewer-container');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0f1117);
+
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 10000);
+camera.position.set(30,30,30);
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.sortObjects = true;
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.screenSpacePanning = true;
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+const dir1 = new THREE.DirectionalLight(0xffffff, 1.1);
+dir1.position.set(50,80,50); dir1.castShadow = true; scene.add(dir1);
+const dir2 = new THREE.DirectionalLight(0xccddff, 0.35);
+dir2.position.set(-30,40,-20); scene.add(dir2);
+scene.add(new THREE.HemisphereLight(0xddeeff,0x0d0d0d,0.25));
+
+const grid = new THREE.GridHelper(200,100,0x2a2d35,0x1e2028);
+grid.material.opacity = 0.5; grid.material.transparent = true; scene.add(grid);
+const axes = new THREE.AxesHelper(5); scene.add(axes);
+
+const modelGroup = new THREE.Group(); modelGroup.name='IFC'; scene.add(modelGroup);
+const edgesGroup = new THREE.Group(); edgesGroup.name='Edges'; edgesGroup.visible=false; scene.add(edgesGroup);
+
+function resizeRenderer() {
+  const w = viewerContainer.clientWidth || window.innerWidth;
+  const h = viewerContainer.clientHeight || (window.innerHeight - 52);
+  renderer.setSize(w, h);
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resizeRenderer);
+resizeRenderer();
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+
+let ifcModelLoaded   = false;
+let sensorDataLoaded = false;
+let heatmapActive    = false;
+let activeSensorType = 'temperature';
+let meshCount        = 0;
+let triangleCount    = 0;
+let sensorMapByGid   = {};
+let spaceMap         = {};
+let spaceNameMap     = {};
+let elementToSpaceMap = {};
+let spaceBounds      = {};
+let totalNamedSpaces = 0;
+let anomalies        = {};
+let wingStats        = {};
+let viewMode         = 'spaces';
+let wireframeMode    = false;
+let edgesMode        = false;
+let xrayMode         = false;
+let panelOpen        = false;
+let sensorRefreshTimer = null;
+
+// ═══════════════════════════════════════════════════════════════════
+// SENSOR DATA — fetch from server instead of file upload
+// ═══════════════════════════════════════════════════════════════════
+
+const cacheStatusEl = document.getElementById('cache-status');
+const refreshBtn    = document.getElementById('refresh-btn');
+
+function setCacheStatus(state, text) {
+  cacheStatusEl.textContent = text;
+  cacheStatusEl.className   = state; // 'live' | 'stale' | 'error' | ''
+}
+
+async function loadSensorDataFromServer() {
+  refreshBtn.disabled = true;
+  refreshBtn.textContent = '⏳ Fetching…';
+  setCacheStatus('', '⏳ Fetching…');
+
+  try {
+    const res = await fetch('/api/points');
+
+    // Session expired mid-session
+    if (res.status === 401) {
+      setCacheStatus('error', '⚠ Session expired');
+      document.getElementById('login-screen').classList.remove('hidden');
+      return;
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      setCacheStatus('error', '⚠ API error');
+      console.error('Sensor fetch error:', err.detail);
+      return;
+    }
+
+    const data = await res.json();
+
+    // Show how fresh the data is
+    const updatedAt = res.headers.get('X-Cache-Updated');
+    if (updatedAt) {
+      const ageSeconds = Math.round((Date.now() - new Date(updatedAt)) / 1000);
+      if (ageSeconds < 15) {
+        setCacheStatus('live', '🟢 Live data');
+      } else {
+        setCacheStatus('stale', `🟡 ${ageSeconds}s ago`);
+      }
+    }
+
+    processSensorData(data);
+
+  } catch (e) {
+    setCacheStatus('error', '⚠ Network error');
+    console.error('Sensor fetch failed:', e);
+  } finally {
+    refreshBtn.disabled = false;
+    refreshBtn.textContent = '🔄 Refresh now';
+  }
+}
+
+function processSensorData(data) {
+  const raw = {};
+
+  for (const entity of data) {
+    const sr = entity.spaceRef || '';
+    if (!sr || sr === 'm:') continue;
+    const gid = sr.replace('r:', '');
+    const val = entity.curVal;
+    if (val === undefined || val === null) continue;
+    const et     = entity.eb_type || '';
+    const vendor = entity.eb_vendor || '';
+    const roomId   = entity.eb_vendor_id || '';
+    const roomDesc = entity.dis_space || '';
+
+    if (!raw[gid]) raw[gid] = { temps:[], co2s:[], hums:[], occs:[], roomId:'', roomDesc:'' };
+    if (roomId)   raw[gid].roomId   = roomId;
+    if (roomDesc) raw[gid].roomDesc = roomDesc;
+
+    if (et==='temperature') raw[gid].temps.push(parseFloat(val));
+    else if (et==='co2')   raw[gid].co2s.push(parseFloat(val));
+    else if (et==='humidity') {
+      let v = parseFloat(val);
+      if (vendor==='platform_of_trust' && v<1.0) v*=100;
+      raw[gid].hums.push(v);
+    }
+    else if (et==='occupancy') raw[gid].occs.push(Boolean(val));
+  }
+
+  const avg = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
+
+  sensorMapByGid = {};
+  for (const [gid, v] of Object.entries(raw)) {
+    sensorMapByGid[gid] = {
+      temp: v.temps.length ? +avg(v.temps).toFixed(2) : null,
+      co2:  v.co2s.length  ? +avg(v.co2s).toFixed(1)  : null,
+      hum:  v.hums.length  ? +avg(v.hums).toFixed(2)  : null,
+      occ:  v.occs.length  ? v.occs.some(Boolean)      : null,
+      roomId:   v.roomId,
+      roomDesc: v.roomDesc,
+    };
+  }
+
+  anomalies = detectAnomalies(sensorMapByGid);
+  wingStats  = computeWingStats(sensorMapByGid);
+  sensorDataLoaded = true;
+
+  const nTemp = Object.values(sensorMapByGid).filter(d=>d.temp!==null).length;
+  const nCo2  = Object.values(sensorMapByGid).filter(d=>d.co2!==null).length;
+  const nHum  = Object.values(sensorMapByGid).filter(d=>d.hum!==null).length;
+  const nOcc  = Object.values(sensorMapByGid).filter(d=>d.occ!==null).length;
+
+  document.getElementById('sensor-stats').innerHTML =
+    `Spaces: <strong>${Object.keys(sensorMapByGid).length}</strong><br>` +
+    `🌡 Temp: ${nTemp} &nbsp; 💨 CO₂: ${nCo2}<br>` +
+    `💧 Humidity: ${nHum} &nbsp; 🚶 Occ: ${nOcc}`;
+
+  updateCoverage();
+  updateWingPanel();
+  updateAnomalyPanel();
+  updateLegend(activeSensorType);
+
+  document.querySelectorAll('.sensor-tab').forEach(t => t.classList.remove('disabled'));
+
+  heatmapActive = true;
+  document.getElementById('heatmap-toggle-btn').textContent = 'Heatmap ON';
+  document.getElementById('heatmap-toggle-btn').classList.remove('off');
+  setActiveSensorTab(activeSensorType);
+
+  if (ifcModelLoaded) applySensorColors();
+}
+
+// Auto-refresh every 3 minutes (matches server cache TTL)
+function startAutoRefresh() {
+  if (sensorRefreshTimer) clearInterval(sensorRefreshTimer);
+  sensorRefreshTimer = setInterval(loadSensorDataFromServer, 3 * 60 * 1000);
+}
+
+refreshBtn.addEventListener('click', () => loadSensorDataFromServer());
+
+// Hook into auth — load sensor data as soon as user is authenticated
+window._onAppReady = () => {
+  loadSensorDataFromServer();
+  startAutoRefresh();
+};
+// If auth already resolved before this module loaded
+if (window._appReady) {
+  loadSensorDataFromServer();
+  startAutoRefresh();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// WEB-IFC SETUP
+// ═══════════════════════════════════════════════════════════════════
+
+const WEB_IFC_VERSION = '0.0.74';
+const WEB_IFC_CDN = `https://cdn.jsdelivr.net/npm/web-ifc@${WEB_IFC_VERSION}/`;
+let WebIFC;
+
+async function loadWebIFC() {
+  const m = await import(`https://cdn.jsdelivr.net/npm/web-ifc@${WEB_IFC_VERSION}/web-ifc-api.js`);
+  WebIFC = m; return WebIFC;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DOM REFS
+// ═══════════════════════════════════════════════════════════════════
+
+const uploadZone     = document.getElementById('upload-zone');
+const dropArea       = document.getElementById('drop-area');
+const fileInput      = document.getElementById('file-input');
+const loadingOverlay = document.getElementById('loading-overlay');
+const loadingText    = document.getElementById('loading-text');
+const loadingBar     = document.getElementById('loading-bar');
+const infoPanel      = document.getElementById('info-panel');
+const controlsHint   = document.getElementById('controls-hint');
+const toolbar        = document.getElementById('toolbar');
+const sidePanel      = document.getElementById('side-panel');
+const hoverTip       = document.getElementById('hover-tooltip');
+const inspectTip     = document.getElementById('inspect-tooltip');
+
+// ═══════════════════════════════════════════════════════════════════
+// FILE HANDLING – IFC
+// ═══════════════════════════════════════════════════════════════════
+
+document.getElementById('btn-browse').addEventListener('click', e => {
+  e.stopPropagation(); fileInput.click();
+});
+dropArea.addEventListener('click', e => {
+  if (e.target.id === 'btn-browse') return; fileInput.click();
+});
+dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
+dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+dropArea.addEventListener('drop', e => {
+  e.preventDefault(); dropArea.classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f && f.name.toLowerCase().endsWith('.ifc')) handleIFCFile(f);
+});
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) handleIFCFile(fileInput.files[0]);
+});
+document.getElementById('btn-new-file').addEventListener('click', () => {
+  clearModel();
+  uploadZone.classList.remove('hidden');
+  viewerContainer.classList.remove('active');
+  infoPanel.classList.remove('active');
+  controlsHint.classList.remove('active');
+  toolbar.classList.remove('active');
+  sidePanel.classList.remove('active');
+  panelOpen = false;
+  ifcModelLoaded = false;
+  spaceMap = {}; spaceNameMap = {}; elementToSpaceMap = {}; spaceBounds = {};
+  viewMode = 'spaces'; setViewMode('spaces');
+  fileInput.value = '';
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// LOAD IFC  (identical to original — no changes needed here)
+// ═══════════════════════════════════════════════════════════════════
+
+async function handleIFCFile(file) {
+  const t0 = performance.now();
+  uploadZone.classList.add('hidden');
+  viewerContainer.classList.add('active');
+  loadingOverlay.classList.add('active');
+  setProgress(5, 'Initializing web-ifc engine...');
+
+  try {
+    if (!WebIFC) await loadWebIFC();
+    setProgress(10, 'Initialising WASM...');
+
+    const ifcAPI = new WebIFC.IfcAPI();
+    ifcAPI.SetWasmPath(WEB_IFC_CDN, true);
+    await ifcAPI.Init();
+
+    setProgress(20, 'Reading IFC file...');
+    const buf = await file.arrayBuffer();
+    const data = new Uint8Array(buf);
+
+    setProgress(30, 'Parsing IFC...');
+    const modelID = ifcAPI.OpenModel(data, { COORDINATE_TO_ORIGIN: true });
+
+    setProgress(35, 'Extracting IfcSpace data...');
+    spaceMap = {}; totalNamedSpaces = 0;
+    const IFCSPACE = 3856911033;
+    try {
+      const ids = ifcAPI.GetLineIDsWithType(modelID, IFCSPACE);
+      const n = typeof ids.size==='function' ? ids.size() : ids.length;
+      for (let i=0;i<n;i++) {
+        const eid = typeof ids.get==='function' ? ids.get(i) : ids[i];
+        try {
+          const p = ifcAPI.GetLine(modelID, eid);
+          const gid = p.GlobalId?.value ?? p.GlobalId;
+          const name = p.Name?.value ?? p.Name ?? '';
+          if (gid) { spaceMap[eid] = gid; spaceNameMap[gid] = String(name); }
+          if (name && !String(name).trim().match(/^\d+$/)) totalNamedSpaces++;
+        } catch(e){}
+      }
+    } catch(e){}
+
+    elementToSpaceMap = {};
+    const IFCRELSPACEBOUNDARY = 3451746338;
+    try {
+      const rids = ifcAPI.GetLineIDsWithType(modelID, IFCRELSPACEBOUNDARY);
+      const rn = typeof rids.size==='function' ? rids.size() : (rids.length||0);
+      for (let i=0;i<rn;i++) {
+        const rid = typeof rids.get==='function' ? rids.get(i) : rids[i];
+        try {
+          const rel = ifcAPI.GetLine(modelID, rid);
+          let se = rel.RelatingSpace?.value ?? rel.RelatingSpace;
+          if (typeof se==='object'&&se) se=se.value??se.expressID;
+          let ee = rel.RelatedBuildingElement?.value ?? rel.RelatedBuildingElement;
+          if (typeof ee==='object'&&ee) ee=ee.value??ee.expressID;
+          if (se&&ee&&spaceMap[se]) elementToSpaceMap[ee]=spaceMap[se];
+        } catch(e){}
+      }
+    } catch(e){}
+
+    setProgress(40, 'Building 3D geometry...');
+    clearModel(); meshCount=0; triangleCount=0;
+    let processed=0;
+
+    ifcAPI.StreamAllMeshes(modelID, (flatMesh, idx, total) => {
+      const geoms = flatMesh.geometries;
+      const n = geoms.size();
+      for (let i=0;i<n;i++) {
+        const pg = geoms.get(i);
+        const ifcGeo = ifcAPI.GetGeometry(modelID, pg.geometryExpressID);
+        let verts, indices;
+        if (typeof ifcAPI.GetVertexArray==='function') {
+          verts   = ifcAPI.GetVertexArray(ifcGeo.GetVertexData(), ifcGeo.GetVertexDataSize());
+          indices = ifcAPI.GetIndexArray(ifcGeo.GetIndexData(), ifcGeo.GetIndexDataSize());
+        } else {
+          const wm=ifcAPI.wasmModule;
+          verts  =wm.HEAPF32.slice(ifcGeo.GetVertexData()/4, ifcGeo.GetVertexData()/4+ifcGeo.GetVertexDataSize());
+          indices=wm.HEAPU32.slice(ifcGeo.GetIndexData()/4,  ifcGeo.GetIndexData()/4+ifcGeo.GetIndexDataSize());
+        }
+        if (!verts.length||!indices.length){ try{ifcGeo.delete();}catch(e){} continue; }
+
+        const geo = new THREE.BufferGeometry();
+        const vc = verts.length/6;
+        const pos = new Float32Array(vc*3);
+        const nor = new Float32Array(vc*3);
+        for (let j=0;j<vc;j++) {
+          pos[j*3]=verts[j*6]; pos[j*3+1]=verts[j*6+1]; pos[j*3+2]=verts[j*6+2];
+          nor[j*3]=verts[j*6+3]; nor[j*3+1]=verts[j*6+4]; nor[j*3+2]=verts[j*6+5];
+        }
+        geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+        geo.setAttribute('normal',  new THREE.BufferAttribute(nor,3));
+        geo.setIndex(new THREE.BufferAttribute(indices,1));
+
+        const c = pg.color;
+        const mat = new THREE.MeshPhongMaterial({
+          color:new THREE.Color(c.x,c.y,c.z), opacity:c.w,
+          transparent:c.w<1, side:THREE.DoubleSide, depthWrite:c.w>=1,
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        const m4 = new THREE.Matrix4(); m4.fromArray(pg.flatTransformation);
+        mesh.applyMatrix4(m4);
+        mesh.userData.expressID = flatMesh.expressID;
+        mesh.userData.origColor = new THREE.Color(c.x,c.y,c.z);
+        mesh.userData.origOpacity = c.w;
+        modelGroup.add(mesh);
+
+        if (indices.length>6) {
+          const eg = new THREE.EdgesGeometry(geo,30);
+          const em = new THREE.LineBasicMaterial({color:0x333333,opacity:0.35,transparent:true});
+          const el = new THREE.LineSegments(eg,em);
+          el.applyMatrix4(m4); edgesGroup.add(el);
+        }
+        meshCount++; triangleCount+=indices.length/3;
+        try{ifcGeo.delete();}catch(e){}
+      }
+      processed++;
+      if (total>0) setProgress(40+processed/total*50, `Building meshes… ${processed}/${total}`);
+    });
+
+    setProgress(91, 'Computing space bounds...');
+    spaceBounds = {};
+    const _spaceGeoMat = new THREE.MeshBasicMaterial({
+      color: 0x888888, opacity: 0.35, transparent: true,
+      side: THREE.DoubleSide, depthWrite: false, depthTest: true,
+    });
+
+    for (const [eidStr, gid] of Object.entries(spaceMap)) {
+      const eid = Number(eidStr);
+      try {
+        const fm = ifcAPI.GetFlatMesh(modelID, eid);
+        const ng = fm.geometries.size();
+        let mnX=Infinity,mxX=-Infinity,mnZ=Infinity,mxZ=-Infinity;
+        const alreadyRendered = modelGroup.children.some(c => c.userData.expressID === eid);
+
+        for (let gi=0;gi<ng;gi++) {
+          const pg=fm.geometries.get(gi);
+          const sg=ifcAPI.GetGeometry(modelID,pg.geometryExpressID);
+          let sv; const m4=new THREE.Matrix4(); m4.fromArray(pg.flatTransformation);
+          if (typeof ifcAPI.GetVertexArray==='function')
+            sv=ifcAPI.GetVertexArray(sg.GetVertexData(),sg.GetVertexDataSize());
+          else { const w=ifcAPI.wasmModule; sv=w.HEAPF32.slice(sg.GetVertexData()/4,sg.GetVertexData()/4+sg.GetVertexDataSize()); }
+          if (!sv.length){ try{sg.delete();}catch(e){} continue; }
+
+          if (!alreadyRendered) {
+            let idxArr = null;
+            try {
+              const ig = ifcAPI.GetGeometry(modelID, pg.geometryExpressID);
+              if (typeof ifcAPI.GetIndexArray==='function')
+                idxArr = ifcAPI.GetIndexArray(ig.GetIndexData(), ig.GetIndexDataSize());
+              else { const w=ifcAPI.wasmModule; idxArr=w.HEAPU32.slice(ig.GetIndexData()/4, ig.GetIndexData()/4+ig.GetIndexDataSize()); }
+              try{ig.delete();}catch(e){}
+            } catch(e){}
+            const vc2=sv.length/6;
+            const pos2=new Float32Array(vc2*3), nor2=new Float32Array(vc2*3);
+            for (let vi=0;vi<vc2;vi++) {
+              pos2[vi*3]=sv[vi*6]; pos2[vi*3+1]=sv[vi*6+1]; pos2[vi*3+2]=sv[vi*6+2];
+              nor2[vi*3]=sv[vi*6+3]; nor2[vi*3+1]=sv[vi*6+4]; nor2[vi*3+2]=sv[vi*6+5];
+            }
+            const geo2 = new THREE.BufferGeometry();
+            geo2.setAttribute('position', new THREE.BufferAttribute(pos2,3));
+            geo2.setAttribute('normal',   new THREE.BufferAttribute(nor2,3));
+            if (idxArr && idxArr.length) geo2.setIndex(new THREE.BufferAttribute(idxArr,1));
+            const mesh2 = new THREE.Mesh(geo2, _spaceGeoMat.clone());
+            mesh2.applyMatrix4(m4);
+            mesh2.userData.expressID  = eid;
+            mesh2.userData.origColor  = new THREE.Color(0.5,0.5,0.5);
+            mesh2.userData.origOpacity= 0.35;
+            modelGroup.add(mesh2);
+            meshCount++;
+          }
+
+          const vc3=sv.length/6;
+          for (let vi=0;vi<vc3;vi++) {
+            const pt=new THREE.Vector3(sv[vi*6],sv[vi*6+1],sv[vi*6+2]); pt.applyMatrix4(m4);
+            mnX=Math.min(mnX,pt.x); mxX=Math.max(mxX,pt.x);
+            mnZ=Math.min(mnZ,pt.z); mxZ=Math.max(mxZ,pt.z);
+          }
+          try{sg.delete();}catch(e){}
+        }
+        if (mnX<Infinity) spaceBounds[gid]={minX:mnX,maxX:mxX,minZ:mnZ,maxZ:mxZ};
+        try{fm.delete();}catch(e){}
+      } catch(e){}
+    }
+
+    setProgress(95, 'Spatial matching...');
+    modelGroup.updateMatrixWorld(true);
+    modelGroup.traverse(child => {
+      if (!child.isMesh) return;
+      const eid = child.userData.expressID;
+      if (spaceMap[eid]||elementToSpaceMap[eid]) return;
+      child.geometry.computeBoundingBox();
+      const lb = child.geometry.boundingBox; if (!lb) return;
+      const wb = lb.clone().applyMatrix4(child.matrixWorld);
+      const cx=(wb.min.x+wb.max.x)/2, cz=(wb.min.z+wb.max.z)/2;
+      let bestGid=null, bestArea=Infinity;
+      for (const [gid,sb] of Object.entries(spaceBounds)) {
+        if (cx>=sb.minX-0.5&&cx<=sb.maxX+0.5&&cz>=sb.minZ-0.5&&cz<=sb.maxZ+0.5) {
+          const area=(sb.maxX-sb.minX)*(sb.maxZ-sb.minZ);
+          if (area<bestArea){bestArea=area;bestGid=gid;}
+        }
+      }
+      if (bestGid) elementToSpaceMap[eid]=bestGid;
+    });
+
+    ifcAPI.CloseModel(modelID);
+    ifcModelLoaded = true;
+
+    if (sensorDataLoaded && heatmapActive) applySensorColors();
+
+    fitCamera();
+    setProgress(100,'Done');
+
+    document.getElementById('info-filename').textContent = file.name;
+    document.getElementById('info-filesize').textContent = fmtBytes(file.size);
+    document.getElementById('info-meshes').textContent   = meshCount.toLocaleString();
+    document.getElementById('info-triangles').textContent = triangleCount.toLocaleString();
+    document.getElementById('info-time').textContent = ((performance.now()-t0)/1000).toFixed(1)+'s';
+
+    setTimeout(()=>{
+      loadingOverlay.classList.remove('active');
+      infoPanel.classList.add('active');
+      controlsHint.classList.add('active');
+      toolbar.classList.add('active');
+      openPanel();
+      updateCoverage(); // now totalNamedSpaces is known — show correct total
+    },300);
+
+  } catch(err) {
+    console.error(err);
+    loadingText.textContent = 'Error: '+err.message;
+    setTimeout(()=>{
+      loadingOverlay.classList.remove('active');
+      uploadZone.classList.remove('hidden');
+      viewerContainer.classList.remove('active');
+    },2500);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODE SWITCH
+// ═══════════════════════════════════════════════════════════════════
+
+function setViewMode(mode) {
+  viewMode = mode;
+  document.getElementById('btn-mode-spaces').classList.toggle('active-mode',  mode==='spaces');
+  document.getElementById('btn-mode-elements').classList.toggle('active-mode', mode==='elements');
+  document.getElementById('btn-mode-spaces').style.background   = mode==='spaces'   ? '#1e3a5f' : '';
+  document.getElementById('btn-mode-elements').style.background = mode==='elements' ? '#16301a' : '';
+  document.getElementById('btn-mode-elements').style.color      = mode==='elements' ? '#6ee7b7' : '';
+  if (ifcModelLoaded) {
+    if (heatmapActive && sensorDataLoaded) applySensorColors();
+    else removeSensorColors();
+  }
+}
+
+document.getElementById('btn-mode-spaces').addEventListener('click',   () => setViewMode('spaces'));
+document.getElementById('btn-mode-elements').addEventListener('click', () => setViewMode('elements'));
+
+// ═══════════════════════════════════════════════════════════════════
+// HEATMAP APPLICATION
+// ═══════════════════════════════════════════════════════════════════
+
+function getGidForMesh(mesh) {
+  const eid = mesh.userData.expressID;
+  return spaceMap[eid] || elementToSpaceMap[eid] || null;
+}
+
+function applySensorColors() {
+  if (!sensorDataLoaded) return;
+  const NO_DATA = new THREE.Color(0.5, 0.5, 0.5);
+
+  modelGroup.traverse(child => {
+    if (!child.isMesh) return;
+    const eid     = child.userData.expressID;
+    const isSpace = !!spaceMap[eid];
+
+    if (!child.userData._origMaterial)
+      child.userData._origMaterial = child.material;
+    if (child.material !== child.userData._origMaterial)
+      child.material.dispose();
+
+    if (viewMode === 'spaces') {
+      if (isSpace) {
+        const gid   = spaceMap[eid];
+        const d     = sensorMapByGid[gid];
+        const color = getColorForType(activeSensorType, d) || NO_DATA;
+        child.material = new THREE.MeshBasicMaterial({
+          color, opacity: 0.55, transparent: true,
+          side: THREE.DoubleSide, depthWrite: false, depthTest: true,
+        });
+        child.renderOrder = 1;
+      } else {
+        child.material = new THREE.MeshBasicMaterial({
+          color: child.userData._origMaterial.color || new THREE.Color(0.4,0.4,0.4),
+          opacity: 0, transparent: true, depthWrite: false, depthTest: true,
+        });
+        child.renderOrder = 0;
+      }
+    } else {
+      const gid   = spaceMap[eid] || elementToSpaceMap[eid];
+      const d     = gid ? sensorMapByGid[gid] : null;
+      const color = getColorForType(activeSensorType, d);
+      if (color) {
+        child.material = new THREE.MeshPhongMaterial({
+          color, opacity: isSpace ? 0.90 : 0.72,
+          transparent: true, side: THREE.DoubleSide,
+          depthWrite: true, emissive: color.clone().multiplyScalar(0.15),
+        });
+        child.renderOrder = isSpace ? 2 : 1;
+      } else {
+        child.material = new THREE.MeshPhongMaterial({
+          color: NO_DATA, opacity: 0.07, transparent: true,
+          side: THREE.DoubleSide, depthWrite: false,
+        });
+        child.renderOrder = 0;
+      }
+    }
+  });
+}
+
+function removeSensorColors() {
+  modelGroup.traverse(child => {
+    if (!child.isMesh) return;
+    if (child.userData._origMaterial) {
+      if (child.material !== child.userData._origMaterial)
+        child.material.dispose();
+      child.material    = child.userData._origMaterial;
+      child.renderOrder = 0;
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PANEL UI UPDATES
+// ═══════════════════════════════════════════════════════════════════
+
+function updateLegend(type) {
+  const entries = LEGEND_ENTRIES[type] || [];
+  const el = document.getElementById('legend-container');
+  el.innerHTML = entries.map(e =>
+    `<div class="legend-row">
+      <div class="legend-swatch" style="background:${e.color};${e.dim?'opacity:.5':''}"></div>
+      <div class="legend-label" style="${e.dim?'opacity:.6':''}">${e.label}</div>
+    </div>`
+  ).join('');
+}
+
+function updateCoverage() {
+  const sensored = Object.keys(sensorMapByGid).length;
+  // Only show a denominator once the IFC has been parsed and totalNamedSpaces is known.
+  // Before that, show the sensor count alone so we don't display a misleading 73/73.
+  if (!ifcModelLoaded || totalNamedSpaces === 0) {
+    document.getElementById('coverage-fill').style.width = '0%';
+    document.getElementById('coverage-text').textContent =
+      sensored > 0
+        ? `${sensored} sensors loaded — upload IFC to see coverage`
+        : 'Loading sensor data…';
+    return;
+  }
+  const total = totalNamedSpaces;
+  const pct   = Math.round(sensored / total * 100);
+  document.getElementById('coverage-fill').style.width = pct + '%';
+  document.getElementById('coverage-text').textContent =
+    `Coverage: ${sensored}/${total} spaces (${pct}%)`;
+}
+
+function updateWingPanel() {
+  const wings = ['A','B','C','D'];
+  for (const w of wings) {
+    const s = wingStats[w];
+    const tEl = document.getElementById(`wt-${w}`);
+    if (tEl) {
+      tEl.textContent = s?.temp != null ? s.temp.toFixed(1) : '—';
+      tEl.style.color = s?.temp!=null ? (s.temp>24?'#e34d4a':s.temp>20?'#40a62e':'#3889d4') : '#4b5563';
+    }
+    const cEl = document.getElementById(`wc-${w}`);
+    if (cEl) {
+      cEl.textContent = s?.co2 != null ? Math.round(s.co2) : '—';
+      cEl.style.color = s?.co2!=null ? (s.co2>1000?'#e34d4a':s.co2>800?'#f09e26':'#40a62e') : '#4b5563';
+    }
+    const oEl = document.getElementById(`wo-${w}`);
+    if (oEl) {
+      oEl.textContent = s?.occ != null ? s.occ+'%' : '—';
+      oEl.style.color = s?.occ!=null ? (s.occ>50?'#33c85a':'#9ca3af') : '#4b5563';
+    }
+  }
+}
+
+function updateAnomalyPanel() {
+  const el = document.getElementById('anomaly-list');
+  const cnt = document.getElementById('anomaly-count');
+  const entries = Object.entries(anomalies);
+  cnt.textContent = entries.length ? `(${entries.length})` : '';
+  if (!entries.length) {
+    el.innerHTML = '<div style="color:#4b5563;font-size:11px">No anomalies detected ✓</div>';
+    return;
+  }
+  el.innerHTML = entries.sort((a,b)=>a[0].localeCompare(b[0])).map(([room, reasons]) =>
+    `<div class="anomaly-item">
+      <div class="anomaly-room">⚠ ${room}</div>
+      <div class="anomaly-detail">${reasons.join('<br>')}</div>
+    </div>`
+  ).join('');
+}
+
+function setActiveSensorTab(type) {
+  activeSensorType = type;
+  document.querySelectorAll('.sensor-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.type===type);
+  });
+  updateLegend(type);
+  if (heatmapActive && ifcModelLoaded && sensorDataLoaded) applySensorColors();
+}
+
+document.querySelectorAll('.sensor-tab').forEach(tab => {
+  tab.classList.add('disabled');
+  tab.addEventListener('click', () => {
+    if (!sensorDataLoaded) return;
+    heatmapActive = true;
+    document.getElementById('heatmap-toggle-btn').textContent='Heatmap ON';
+    document.getElementById('heatmap-toggle-btn').classList.remove('off');
+    setActiveSensorTab(tab.dataset.type);
+  });
+});
+
+document.getElementById('heatmap-toggle-btn').addEventListener('click', () => {
+  if (!sensorDataLoaded||!ifcModelLoaded) return;
+  heatmapActive = !heatmapActive;
+  const btn = document.getElementById('heatmap-toggle-btn');
+  if (heatmapActive) {
+    applySensorColors();
+    btn.textContent='Heatmap ON'; btn.classList.remove('off');
+  } else {
+    removeSensorColors();
+    btn.textContent='Heatmap OFF'; btn.classList.add('off');
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// PANEL OPEN / CLOSE
+// ═══════════════════════════════════════════════════════════════════
+
+function openPanel() {
+  panelOpen = true;
+  sidePanel.classList.add('active');
+  document.getElementById('btn-toggle-panel').textContent = '▶ Sensor Panel';
+  resizeRenderer();
+}
+function closePanel() {
+  panelOpen = false;
+  sidePanel.classList.remove('active');
+  document.getElementById('btn-toggle-panel').textContent = '◀ Sensor Panel';
+  resizeRenderer();
+}
+
+document.getElementById('btn-toggle-panel').addEventListener('click', () => {
+  panelOpen ? closePanel() : openPanel();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════════════════════════════════
+
+document.getElementById('btn-wireframe').addEventListener('click', () => {
+  wireframeMode = !wireframeMode;
+  document.getElementById('btn-wireframe').classList.toggle('active-btn', wireframeMode);
+  modelGroup.traverse(c => { if (c.isMesh&&c.material) c.material.wireframe=wireframeMode; });
+});
+
+document.getElementById('btn-edges').addEventListener('click', () => {
+  edgesMode = !edgesMode;
+  document.getElementById('btn-edges').classList.toggle('active-btn', edgesMode);
+  edgesGroup.visible = edgesMode;
+});
+
+document.getElementById('btn-transparent').addEventListener('click', () => {
+  xrayMode = !xrayMode;
+  document.getElementById('btn-transparent').classList.toggle('active-btn', xrayMode);
+  modelGroup.traverse(c => {
+    if (!c.isMesh||!c.material) return;
+    if (xrayMode) {
+      c.material._xOp = c.material.opacity;
+      c.material._xTr = c.material.transparent;
+      c.material.opacity=0.12; c.material.transparent=true; c.material.depthWrite=false;
+    } else {
+      c.material.opacity = c.material._xOp ?? 1;
+      c.material.transparent = c.material._xTr ?? false;
+      c.material.depthWrite = !c.material.transparent;
+    }
+    c.material.needsUpdate=true;
+  });
+});
+
+document.getElementById('btn-fit').addEventListener('click', fitCamera);
+
+// ═══════════════════════════════════════════════════════════════════
+// HOVER TOOLTIP
+// ═══════════════════════════════════════════════════════════════════
+
+const raycaster = new THREE.Raycaster();
+const mouse     = new THREE.Vector2();
+
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = ((e.clientX-rect.left)/rect.width)*2-1;
+  mouse.y = -((e.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(modelGroup.children, false);
+
+  if (!hits.length) { hoverTip.style.display='none'; return; }
+  const eid = hits[0].object.userData.expressID;
+  const gid = viewMode === 'spaces'
+    ? (spaceMap[eid] || null)
+    : (spaceMap[eid] || elementToSpaceMap[eid] || null);
+  if (!gid) { hoverTip.style.display='none'; return; }
+
+  const d = sensorMapByGid[gid];
+  if (!d) {
+    const roomName = spaceNameMap[gid] || gid;
+    hoverTip.innerHTML = `<div class="tt-room">${roomName}</div>`
+      + `<div style="color:#6b7280;font-size:10px">no sensor data</div>`;
+    hoverTip.style.left = (e.clientX+16)+'px';
+    hoverTip.style.top  = (e.clientY+16)+'px';
+    hoverTip.style.display = 'block';
+    return;
+  }
+
+  const score = comfortScore(d.temp, d.co2);
+  const iaq   = iaqKey(d.occ, d.co2);
+  const iaqLabels = { vacant_ok:'Vacant ✓', occupied_ok:'Good air', occupied_watch:'Watch',
+                      occupied_alert:'Alert!', no_occ_data:'No occ sensor' };
+
+  hoverTip.innerHTML =
+    `<div class="tt-room">${d.roomId || gid}${d.roomDesc ? '<span style="margin-left:6px;font-weight:400;color:#9ca3af;font-size:10px">'+d.roomDesc+'</span>' : ''}</div>` +
+    (d.temp!==null ? `🌡 ${d.temp.toFixed(1)} °C &nbsp;` : '') +
+    (d.co2 !==null ? `💨 ${Math.round(d.co2)} ppm &nbsp;` : '') +
+    (d.hum !==null ? `💧 ${d.hum.toFixed(0)} %RH &nbsp;` : '') +
+    (d.occ !==null ? (d.occ?'🟢 Occupied':'🔵 Vacant') : '') +
+    (score!==null ? `<br>😊 Comfort: ${score}/100` : '') +
+    (iaq   ? `<br>⚠ IAQ: ${iaqLabels[iaq]||iaq}` : '');
+
+  hoverTip.style.left = (e.clientX+16)+'px';
+  hoverTip.style.top  = (e.clientY+16)+'px';
+  hoverTip.style.display = 'block';
+});
+canvas.addEventListener('mouseleave', () => { hoverTip.style.display='none'; });
+
+// ═══════════════════════════════════════════════════════════════════
+// CLICK INSPECT
+// ═══════════════════════════════════════════════════════════════════
+
+canvas.addEventListener('click', e => {
+  if (!sensorDataLoaded || !ifcModelLoaded) return;
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = ((e.clientX-rect.left)/rect.width)*2-1;
+  mouse.y = -((e.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(modelGroup.children, false);
+
+  if (!hits.length) { inspectTip.style.display='none'; return; }
+  const eid = hits[0].object.userData.expressID;
+  const gid = viewMode === 'spaces'
+    ? (spaceMap[eid] || null)
+    : (spaceMap[eid] || elementToSpaceMap[eid] || null);
+  if (!gid) { inspectTip.style.display='none'; return; }
+
+  const d = sensorMapByGid[gid];
+  if (!d) { inspectTip.style.display='none'; return; }
+
+  const score = comfortScore(d.temp, d.co2);
+  const iaq   = iaqKey(d.occ, d.co2);
+  const anom  = anomalies[d.roomId];
+  const iaqLabels = { vacant_ok:'Vacant — Good air', occupied_ok:'Occupied — Good air',
+                      occupied_watch:'Occupied — Watch CO₂', occupied_alert:'Occupied — CO₂ Alert!',
+                      no_occ_data:'No occupancy sensor' };
+
+  inspectTip.innerHTML =
+    `<div class="tt-room">📍 ${d.roomId || gid}${d.roomDesc ? '<br><span style="font-weight:400;color:#9ca3af;font-size:11px">'+d.roomDesc+'</span>' : ''}</div>` +
+    (d.temp!==null ? `<div class="tt-row"><span class="tt-key">Temperature</span><span class="tt-val">${d.temp.toFixed(1)} °C</span></div>` : '') +
+    (d.co2 !==null ? `<div class="tt-row"><span class="tt-key">CO₂</span><span class="tt-val">${Math.round(d.co2)} ppm</span></div>` : '') +
+    (d.hum !==null ? `<div class="tt-row"><span class="tt-key">Humidity</span><span class="tt-val">${d.hum.toFixed(1)} %RH</span></div>` : '') +
+    (d.occ !==null ? `<div class="tt-row"><span class="tt-key">Occupancy</span><span class="tt-val">${d.occ?'Occupied':'Vacant'}</span></div>` : '') +
+    (score !==null ? `<div class="tt-row"><span class="tt-key">Comfort score</span><span class="tt-val">${score}/100</span></div>` : '') +
+    (iaq   ? `<div class="tt-row"><span class="tt-key">IAQ</span><span class="tt-val">${iaqLabels[iaq]||iaq}</span></div>` : '') +
+    (anom  ? `<div class="tt-anomaly">⚠ Anomaly: ${anom.join(', ')}</div>` : '');
+
+  inspectTip.style.left = Math.min(e.clientX+20, window.innerWidth-280)+'px';
+  inspectTip.style.top  = Math.min(e.clientY+20, window.innerHeight-200)+'px';
+  inspectTip.style.display='block';
+});
+
+window.addEventListener('keydown', e => {
+  if (e.key==='Escape') { inspectTip.style.display='none'; hoverTip.style.display='none'; }
+});
+canvas.addEventListener('contextmenu', e => {
+  e.preventDefault(); inspectTip.style.display='none';
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════════════════════
+
+window.addEventListener('keydown', e => {
+  if (e.target.tagName==='INPUT') return;
+  switch(e.key.toLowerCase()) {
+    case 'w': document.getElementById('btn-wireframe').click(); break;
+    case 'e': document.getElementById('btn-edges').click(); break;
+    case 'x': document.getElementById('btn-transparent').click(); break;
+    case 'f': fitCamera(); break;
+    case 's': panelOpen ? closePanel() : openPanel(); break;
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+function clearModel() {
+  while (modelGroup.children.length) {
+    const c=modelGroup.children[0];
+    c.geometry?.dispose();
+    if (Array.isArray(c.material)) c.material.forEach(m=>m.dispose());
+    else c.material?.dispose();
+    modelGroup.remove(c);
+  }
+  while (edgesGroup.children.length) {
+    const c=edgesGroup.children[0];
+    c.geometry?.dispose(); c.material?.dispose(); edgesGroup.remove(c);
+  }
+}
+
+function fitCamera() {
+  const box = new THREE.Box3().setFromObject(modelGroup);
+  if (box.isEmpty()) return;
+  const ctr = box.getCenter(new THREE.Vector3());
+  const sz  = box.getSize(new THREE.Vector3());
+  const d   = Math.max(sz.x,sz.y,sz.z)*1.5;
+  camera.position.set(ctr.x+d*.6, ctr.y+d*.5, ctr.z+d*.6);
+  camera.near = d*0.001; camera.far = d*100;
+  camera.updateProjectionMatrix();
+  camera.lookAt(ctr); controls.target.copy(ctr); controls.update();
+  grid.position.y = box.min.y-0.01;
+  const gs = d*3; grid.scale.set(gs/200,1,gs/200);
+}
+
+function setProgress(pct, msg) {
+  loadingBar.style.width = pct+'%';
+  loadingText.textContent = msg;
+}
+
+function fmtBytes(b) {
+  if (b<1024) return b+' B';
+  if (b<1048576) return (b/1024).toFixed(1)+' KB';
+  return (b/1048576).toFixed(1)+' MB';
+}
+
+updateLegend('temperature');
+</script>
+</body>
+</html>
