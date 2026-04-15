@@ -23,8 +23,7 @@ data/haystack_*.json
 # Keep space_mapping.json (generated from IFC, safe to commit)
 # data/space_mapping.json  ← do NOT ignore this one
 
-# IFC model (large binary — use Git LFS or keep out of repo)
-*.ifc
+
 
 # IDE
 .vscode/
