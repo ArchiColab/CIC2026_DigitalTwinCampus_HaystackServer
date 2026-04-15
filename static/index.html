@@ -348,7 +348,7 @@ body {
     <button class="tool-btn" id="btn-transparent">X-Ray</button>
     <button class="tool-btn" id="btn-fit">Fit View</button>
     <div class="sep"></div>
-    <button class="tool-btn" id="btn-new-file">New IFC</button>
+    <button class="tool-btn" id="btn-new-file">📂 Custom IFC</button>
     <button class="tool-btn" id="btn-toggle-panel">◀ Sensor Panel</button>
   </div>
   <!-- Cache freshness badge -->
@@ -360,13 +360,16 @@ body {
   </div>
 </div>
 
-<!-- Upload zone -->
-<div id="upload-zone">
+<!-- Upload zone (shown only when user clicks "Load custom IFC") -->
+<div id="upload-zone" class="hidden">
   <div id="drop-area">
     <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
     <h2>Upload IFC Model</h2>
     <p>Drag & drop your .ifc file here, or click to browse</p>
     <button class="browse-btn" id="btn-browse">Choose IFC File</button>
+    <div style="margin-top:16px;">
+      <button id="btn-use-default" style="background:transparent;border:none;color:#6b7280;font-size:12px;cursor:pointer;text-decoration:underline;">← Use default campus model</button>
+    </div>
   </div>
 </div>
 
@@ -1007,11 +1010,47 @@ refreshBtn.addEventListener('click', () => loadSensorDataFromServer());
 window._onAppReady = () => {
   loadSensorDataFromServer();
   startAutoRefresh();
+  loadDefaultIFC();
 };
 // If auth already resolved before this module loaded
 if (window._appReady) {
   loadSensorDataFromServer();
   startAutoRefresh();
+  loadDefaultIFC();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DEFAULT IFC AUTO-LOAD
+// Fetches ARK_MET_F1_clean.ifc from /data/ after login
+// ═══════════════════════════════════════════════════════════════════
+
+async function loadDefaultIFC() {
+  const DEFAULT_IFC_PATH = '/data/ARK_MET_F1_clean.ifc';
+  try {
+    uploadZone.classList.add('hidden');
+    viewerContainer.classList.add('active');
+    loadingOverlay.classList.add('active');
+    setProgress(5, 'Fetching default campus model…');
+
+    const res = await fetch(DEFAULT_IFC_PATH);
+    if (!res.ok) {
+      // File not found — fall back to upload zone gracefully
+      console.warn('Default IFC not found at', DEFAULT_IFC_PATH, '— showing upload zone');
+      loadingOverlay.classList.remove('active');
+      viewerContainer.classList.remove('active');
+      uploadZone.classList.remove('hidden');
+      return;
+    }
+    setProgress(15, 'Downloading campus model…');
+    const blob = await res.blob();
+    const file = new File([blob], 'ARK_MET_F1_clean.ifc', { type: 'application/octet-stream' });
+    await handleIFCFile(file);
+  } catch (err) {
+    console.error('Default IFC load failed:', err);
+    loadingOverlay.classList.remove('active');
+    viewerContainer.classList.remove('active');
+    uploadZone.classList.remove('hidden');
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -1077,6 +1116,11 @@ document.getElementById('btn-new-file').addEventListener('click', () => {
   spaceMap = {}; spaceNameMap = {}; elementToSpaceMap = {}; spaceBounds = {};
   viewMode = 'spaces'; setViewMode('spaces');
   fileInput.value = '';
+});
+
+document.getElementById('btn-use-default').addEventListener('click', () => {
+  uploadZone.classList.add('hidden');
+  loadDefaultIFC();
 });
 
 // ═══════════════════════════════════════════════════════════════════
