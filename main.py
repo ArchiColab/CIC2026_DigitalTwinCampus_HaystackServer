@@ -293,5 +293,10 @@ async def status(request: Request, session: dict = Depends(get_session)):
     }
 
 
+# ── Data files (IFC model, space mapping) — served before frontend ───────────
+import os as _os
+if _os.path.isdir("data"):
+    app.mount("/data", StaticFiles(directory="data"), name="data")
+
 # ── Frontend — must be last so API routes take priority ───────────────────────
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
