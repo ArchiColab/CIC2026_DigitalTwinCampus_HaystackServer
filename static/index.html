@@ -669,8 +669,8 @@ function co2Color(val) {
 function humidColor(val) {
   if (val === null) return null;
   const stops = [
-    [30,[0.22,0.54,0.83]],[40,[0.11,0.62,0.46]],
-    [60,[0.25,0.65,0.18]],[70,[0.94,0.62,0.15]],[100,[0.89,0.30,0.29]]
+    [30,[0.89,0.30,0.29]],[40,[0.94,0.62,0.15]],
+    [60,[0.25,0.65,0.18]],[70,[0.11,0.62,0.46]],[100,[0.22,0.54,0.83]]
   ];
   for (let i=0;i<stops.length;i++) if (val<=stops[i][0]) return new THREE.Color(...stops[i][1]);
   return new THREE.Color(...stops[stops.length-1][1]);
